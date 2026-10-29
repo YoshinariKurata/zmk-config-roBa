@@ -90,6 +90,29 @@
             bindings = <&bt BT_SEL 2>, <&to 7>;
         };
 
+        // 押している間 ⌘ を押したままにしてアプリ切り替えを開き、S / D で前後に選ぶレイヤー 12 に入る
+        app_switch: app_switch {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &mo 12 &kp LGUI>
+                , <&macro_tap &kp TAB>
+                , <&macro_pause_for_release>
+                , <&macro_release &mo 12 &kp LGUI>
+                ;
+        };
+
+        app_switch_win: app_switch_win {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &mo 12 &kp LALT>
+                , <&macro_tap &kp TAB>
+                , <&macro_pause_for_release>
+                , <&macro_release &mo 12 &kp LALT>
+                ;
+        };
+
         bt_win3: bt_win3 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -233,8 +256,8 @@
         // トラックボールを動かすと自動で入る。右親指・左で抜ける
         MOUSE {
             bindings = <
-&hold_kp LA(LG(W)) LG(W)  &trans  &trans  &trans  &trans                      &trans  &trans  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
-&trans         &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans    &trans         &trans
+&hold_kp LA(LG(W)) LG(W)  &kp LC(LEFT)       &hold_kp LC(DOWN) LC(UP)  &kp LC(RIGHT)  &trans                                    &trans  &trans  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
+&trans                    &kp LC(LS(TAB))    &kp LC(TAB)               &app_switch    &hold_kp LS(LG(GRAVE)) LG(GRAVE)  &trans      &trans  &trans  &trans  &trans    &trans         &trans
 &trans         &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans    &trans         &trans
 &trans         &trans  &trans  &trans  &trans  &trans      &tog 4  &trans                                   &trans
             >;
@@ -291,8 +314,8 @@
         // Windows/Android モード中のマウスレイヤー
         WIN_MOUSE {
             bindings = <
-&hold_kp LA(F4) LC(W)  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
-&trans      &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&hold_kp LA(F4) LC(W)  &kp LC(LG(LEFT))  &kp LG(TAB)  &kp LC(LG(RIGHT))  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans      &trans  &trans  &app_switch_win  &none  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans      &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans      &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
@@ -305,6 +328,16 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
+            >;
+        };
+
+        // マウスレイヤーで F を押している間 (アプリ切り替え中)。Q で終了、W で非表示
+        APP_SWITCH {
+            bindings = <
+&kp Q   &kp H         &trans   &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &kp LS(TAB)   &kp TAB  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans   &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans   &trans  &trans  &trans      &trans  &trans                          &trans
             >;
         };
     };
