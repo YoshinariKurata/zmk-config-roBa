@@ -193,7 +193,7 @@
         default_layer {
             bindings = <
 &kp Q             &kp W         &kp E         &kp R                        &lt_bt 6 T                                                     &kp Y        &kp U  &lt 5 I    &kp O    &kp P
-&kp A             &kp S         &kp D         &kp F                   &kp G        &kp LC(LS(LG(N4)))            &kp MINUS      &kp H        &kp J  &kp K      &kp L    &kp SQT
+&kp A             &kp S         &kp D         &kp F                   &kp G        &kp LS(LG(N3))            &kp MINUS      &kp H        &kp J  &kp K      &kp L    &kp SQT
 &kp Z             &kp X        &kp C         &kp V                   &kp B        &kp COLON                     &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT  &kp SLASH
 &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &kana_eisu              &lt 2 SPACE  &lt_to_layer_0 3 LANG2       &kp TAB        &lt 1 ENTER                             &kp DEL
             >;
@@ -233,7 +233,7 @@
         // トラックボールを動かすと自動で入る。右親指・左で抜ける
         MOUSE {
             bindings = <
-&kp LA(LG(W))  &trans  &trans  &trans  &trans                      &trans  &trans  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
+&hold_kp LA(LG(W)) LG(W)  &trans  &trans  &trans  &trans                      &trans  &trans  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
 &trans         &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans    &trans         &trans
 &trans         &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans    &trans         &trans
 &trans         &trans  &trans  &trans  &trans  &trans      &tog 4  &trans                                   &trans
@@ -262,7 +262,7 @@
         WIN {
             bindings = <
 &trans    &trans    &trans     &trans          &trans                                 &trans  &trans  &trans  &trans  &trans
-&trans    &trans    &trans     &trans          &trans       &kp LS(LG(S))     &trans  &trans  &trans  &trans  &trans  &trans
+&trans    &trans    &trans     &trans          &trans       &kp LG(PRINTSCREEN)     &trans  &trans  &trans  &trans  &trans  &trans
 &trans    &trans    &trans     &trans          &trans       &trans            &trans  &trans  &trans  &trans  &trans  &trans
 &kp LGUI  &kp LALT  &kp LCTRL  &kana_eisu_win  &trans       &lt_kp 3 INT_MUHENKAN      &trans  &trans                  &trans
             >;
@@ -291,7 +291,7 @@
         // Windows/Android モード中のマウスレイヤー
         WIN_MOUSE {
             bindings = <
-&kp LA(F4)  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&hold_kp LA(F4) LC(W)  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
 &trans      &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans      &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans      &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
