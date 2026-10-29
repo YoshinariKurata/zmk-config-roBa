@@ -233,7 +233,7 @@
         // トラックボールを動かすと自動で入る。右親指・左で抜ける
         MOUSE {
             bindings = <
-&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &kp LC(LEFT)              &hold_kp LC(DOWN) LC(UP)  &kp LC(RIGHT)                     &trans  &trans  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
+&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &kp LC(LEFT)              &hold_kp LC(DOWN) LC(UP)  &kp LC(RIGHT)                     &trans  &kp LA(P)  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
 &trans                    &trans             &trans                    &trans                    &trans                            &trans      &trans  &trans  &trans  &kp LC(LS(TAB))  &trans  &kp LC(TAB)
 &trans         &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans    &trans         &trans
 &trans         &trans  &trans  &trans  &trans  &trans      &tog 4  &trans                                   &trans
