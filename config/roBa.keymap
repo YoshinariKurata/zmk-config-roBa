@@ -52,6 +52,49 @@
             layers = <7 8 9 10 11>;
         };
 
+        // B + : でキーマップ図を表示 (Hammerspoon が ⌃⌥⇧⌘ + レイヤー番号を受け取る)
+        keymap_l0 {
+            bindings = <&kp LC(LA(LS(LG(N0))))>;
+            key-positions = <26 27>;
+            layers = <0>;
+        };
+
+        keymap_l1 {
+            bindings = <&kp LC(LA(LS(LG(N1))))>;
+            key-positions = <26 27>;
+            layers = <1>;
+        };
+
+        keymap_l2 {
+            bindings = <&kp LC(LA(LS(LG(N2))))>;
+            key-positions = <26 27>;
+            layers = <2>;
+        };
+
+        keymap_l3 {
+            bindings = <&kp LC(LA(LS(LG(N3))))>;
+            key-positions = <26 27>;
+            layers = <3>;
+        };
+
+        keymap_l4 {
+            bindings = <&kp LC(LA(LS(LG(N4))))>;
+            key-positions = <26 27>;
+            layers = <4>;
+        };
+
+        keymap_l5 {
+            bindings = <&kp LC(LA(LS(LG(N5))))>;
+            key-positions = <26 27>;
+            layers = <5>;
+        };
+
+        keymap_l6 {
+            bindings = <&kp LC(LA(LS(LG(N6))))>;
+            key-positions = <26 27>;
+            layers = <6>;
+        };
+
         double_quotation {
             bindings = <&kp DOUBLE_QUOTES>;
             key-positions = <20 21>;
