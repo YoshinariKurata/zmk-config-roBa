@@ -222,6 +222,14 @@
             tapping-term-ms = <200>;
         };
 
+        // 1回で音量ダウン、2回素早く押すとミュート
+        vol_dn_mute: vol_dn_mute {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp C_VOL_DN>, <&kp C_MUTE>;
+        };
+
         kana_eisu_win: kana_eisu_win {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -276,10 +284,10 @@
         // トラックボールを動かすと自動で入る。右親指・左で抜ける
         MOUSE {
             bindings = <
-&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &trans         &trans          &trans                 &trans  &trans  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
-&trans                    &trans                    &kp LC(UP)     &trans          &trans  &trans         &trans  &trans  &trans    &kp LC(LS(TAB))  &trans  &kp LC(TAB)
-&trans                    &kp LC(LEFT)              &kp LC(DOWN)   &kp LC(RIGHT)   &trans  &trans         &trans  &trans  &trans    &trans           &trans  &trans
-&trans                    &trans                    &trans         &trans          &trans  &trans         &tog 4  &trans                                     &trans
+&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &trans         &kp LC(UP)     &trans                 &trans  &kp C_VOL_UP   &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
+&trans                    &trans                    &kp LC(LEFT)   &kp LC(DOWN)   &kp LC(RIGHT)  &trans  &trans  &trans  &vol_dn_mute  &kp LC(LS(TAB))  &trans  &kp LC(TAB)
+&trans                    &trans                    &trans         &trans         &trans  &trans         &trans  &trans  &trans    &trans           &trans  &trans
+&trans                    &trans                    &trans         &trans         &trans  &trans         &tog 4  &trans                                     &trans
             >;
         };
 
@@ -334,10 +342,10 @@
         // Windows/Android モード中のマウスレイヤー
         WIN_MOUSE {
             bindings = <
-&hold_kp LA(F4) LC(W)  &hold_kp LG(UP) LG(DOWN)  &trans            &trans             &trans             &trans  &trans  &trans  &trans  &trans
-&trans                 &trans                    &kp LG(TAB)       &trans             &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans
-&trans                 &kp LC(LG(LEFT))          &none             &kp LC(LG(RIGHT))  &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans
-&trans                 &trans                    &trans            &trans             &trans  &trans     &trans  &trans                          &trans
+&hold_kp LA(F4) LC(W)  &hold_kp LG(UP) LG(DOWN)  &trans            &kp LG(TAB)  &trans             &trans  &trans  &trans  &trans  &trans
+&trans                 &trans                    &kp LC(LG(LEFT))  &none        &kp LC(LG(RIGHT))  &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans                 &trans                    &trans            &trans       &trans             &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans                 &trans                    &trans            &trans       &trans             &trans     &trans  &trans                          &trans
             >;
         };
 
