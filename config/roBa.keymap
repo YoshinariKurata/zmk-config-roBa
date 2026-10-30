@@ -233,10 +233,10 @@
         // トラックボールを動かすと自動で入る。右親指・左で抜ける
         MOUSE {
             bindings = <
-&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &kp LC(LEFT)              &hold_kp LC(DOWN) LC(UP)  &kp LC(RIGHT)                     &trans  &kp LS(LG(N9))  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
-&trans                    &trans             &trans                    &trans                    &trans                            &trans      &trans  &trans  &trans  &kp LC(LS(TAB))  &trans  &kp LC(TAB)
-&trans         &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans    &trans         &trans
-&trans         &trans  &trans  &trans  &trans  &trans      &tog 4  &trans                                   &trans
+&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &trans         &trans          &trans                 &trans  &trans  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
+&trans                    &trans                    &kp LC(UP)     &trans          &trans  &trans         &trans  &trans  &trans    &kp LC(LS(TAB))  &trans  &kp LC(TAB)
+&trans                    &kp LC(LEFT)              &kp LC(DOWN)   &kp LC(RIGHT)   &trans  &trans         &trans  &trans  &trans    &trans           &trans  &trans
+&trans                    &trans                    &trans         &trans          &trans  &trans         &tog 4  &trans                                     &trans
             >;
         };
 
@@ -291,10 +291,10 @@
         // Windows/Android モード中のマウスレイヤー
         WIN_MOUSE {
             bindings = <
-&hold_kp LA(F4) LC(W)  &hold_kp LG(UP) LG(DOWN)  &kp LC(LG(LEFT))  &kp LG(TAB)  &kp LC(LG(RIGHT))                      &trans  &trans  &trans  &trans  &trans
-&trans      &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans      &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans      &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
+&hold_kp LA(F4) LC(W)  &hold_kp LG(UP) LG(DOWN)  &trans            &trans             &trans             &trans  &trans  &trans  &trans  &trans
+&trans                 &trans                    &kp LG(TAB)       &trans             &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans                 &kp LC(LG(LEFT))          &none             &kp LC(LG(RIGHT))  &trans  &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans                 &trans                    &trans            &trans             &trans  &trans     &trans  &trans                          &trans
             >;
         };
 
