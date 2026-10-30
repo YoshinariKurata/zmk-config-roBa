@@ -285,7 +285,7 @@
         MOUSE {
             bindings = <
 &hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &trans         &kp LC(UP)     &trans                 &kp LC(LA(LS(LG(P))))  &kp C_VOL_UP   &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
-&trans                    &trans                    &kp LC(LEFT)   &kp LC(DOWN)   &kp LC(RIGHT)  &trans  &trans  &trans  &vol_dn_mute  &kp LC(LS(TAB))  &trans  &kp LC(TAB)
+&trans                    &trans                    &kp LC(LEFT)   &kp LC(DOWN)   &kp LC(RIGHT)  &trans  &trans  &kp LC(LA(LS(LG(A))))  &vol_dn_mute  &kp LC(LS(TAB))  &trans  &kp LC(TAB)
 &trans                    &trans                    &trans         &trans         &trans  &trans         &trans  &trans  &trans    &trans           &trans  &trans
 &trans                    &trans                    &trans         &trans         &trans  &trans         &tog 4  &trans                                     &trans
             >;
@@ -343,7 +343,7 @@
         WIN_MOUSE {
             bindings = <
 &hold_kp LA(F4) LC(W)  &hold_kp LG(UP) LG(DOWN)  &trans            &kp LG(TAB)  &trans             &none  &trans  &trans  &trans  &trans
-&trans                 &trans                    &kp LC(LG(LEFT))  &none        &kp LC(LG(RIGHT))  &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans                 &trans                    &kp LC(LG(LEFT))  &none        &kp LC(LG(RIGHT))  &trans     &trans  &none  &trans  &trans  &trans  &trans
 &trans                 &trans                    &trans            &trans       &trans             &trans     &trans  &trans  &trans  &trans  &trans  &trans
 &trans                 &trans                    &trans            &trans       &trans             &trans     &trans  &trans                          &trans
             >;
