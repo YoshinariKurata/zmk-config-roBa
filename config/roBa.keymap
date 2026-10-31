@@ -149,17 +149,18 @@
     behaviors {
         // 左親指・右のキー: 1回で基本へ戻る、2回で数字レイヤー、長押しの間はレイヤー3
         // 外側を hold-tap にして、押してすぐ別のキーを押しても長押しとして扱う
+        // 長押しは別のキーを押した時点で確定するので、hold-tap の時間は長めでも遅れない
         thumb_tap_mac: thumb_tap_mac {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <350>;
             bindings = <&to 0>, <&to 2>;
         };
 
         thumb_tap_win: thumb_tap_win {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <350>;
             bindings = <&to 7>, <&to_num_win>;
         };
 
@@ -169,7 +170,7 @@
             flavor = "hold-preferred";
 
             #binding-cells = <2>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <500>;
         };
 
         thumb_win: thumb_win {
@@ -178,7 +179,7 @@
             flavor = "hold-preferred";
 
             #binding-cells = <2>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <500>;
         };
 
         // タップと長押しで別のキーを送る (長押しはタイムアウトでのみ判定)
