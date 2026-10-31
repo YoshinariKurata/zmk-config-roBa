@@ -148,27 +148,37 @@
 
     behaviors {
         // 左親指・右のキー: 1回で基本へ戻る、2回で数字レイヤー、長押しの間はレイヤー3
-        thumb_hold: thumb_hold {
-            compatible = "zmk,behavior-hold-tap";
-            bindings = <&mo>, <&to>;
-            flavor = "hold-preferred";
+        // 外側を hold-tap にして、押してすぐ別のキーを押しても長押しとして扱う
+        thumb_tap_mac: thumb_tap_mac {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&to 0>, <&to 2>;
+        };
 
-            #binding-cells = <2>;
-            tapping-term-ms = <50>;
+        thumb_tap_win: thumb_tap_win {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&to 7>, <&to_num_win>;
         };
 
         thumb_mac: thumb_mac {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
+            compatible = "zmk,behavior-hold-tap";
+            bindings = <&mo>, <&thumb_tap_mac>;
+            flavor = "hold-preferred";
+
+            #binding-cells = <2>;
             tapping-term-ms = <200>;
-            bindings = <&thumb_hold 3 0>, <&to 2>;
         };
 
         thumb_win: thumb_win {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
+            compatible = "zmk,behavior-hold-tap";
+            bindings = <&mo>, <&thumb_tap_win>;
+            flavor = "hold-preferred";
+
+            #binding-cells = <2>;
             tapping-term-ms = <200>;
-            bindings = <&thumb_hold 3 7>, <&to_num_win>;
         };
 
         // タップと長押しで別のキーを送る (長押しはタイムアウトでのみ判定)
@@ -221,7 +231,7 @@
 &kp Q             &kp L         &kp U         &kp COMMA                    &lt_bt 6 DOT                                                   &kp F        &kp W  &kp R      &kp Y    &kp P
 &kp E             &kp I         &kp A         &kp O                   &kp SLASH    &kp LS(LG(N3))            &kp MINUS      &kp K        &kp T  &kp N      &kp S    &kp H
 &kp Z             &kp X        &kp C         &kp V                   &hold_kp DOUBLE_QUOTES SQT  &kp COLON                     &kp SEMICOLON  &kp G        &kp D  &kp M      &kp J    &kp B
-&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mo 1                   &kp SPACE    &thumb_mac                   &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
+&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mo 1                   &kp SPACE    &thumb_mac 3 0               &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
 
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
@@ -293,7 +303,7 @@
 &trans    &trans    &trans     &trans          &trans                                 &trans  &trans  &trans  &trans  &trans
 &trans    &trans    &trans     &trans          &trans       &kp LG(PRINTSCREEN)     &trans  &trans  &trans  &trans  &trans  &trans
 &trans    &trans    &trans     &trans          &trans       &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&kp LGUI  &kp LALT  &kp LCTRL  &trans          &trans       &thumb_win        &trans  &trans                  &trans
+&kp LGUI  &kp LALT  &kp LCTRL  &trans          &trans       &thumb_win 3 0    &trans  &trans                  &trans
             >;
         };
 
