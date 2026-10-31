@@ -250,7 +250,7 @@
         // トラックボールを動かすと自動で入る。右親指・左で抜ける
         MOUSE {
             bindings = <
-&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &kp LC(UP)     &trans         &trans                 &trans                 &trans         &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
+&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &kp LC(UP)     &kp LC(LA(LS(LG(N))))  &trans                 &trans                 &trans         &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
 &kp LG(A)                 &kp LC(LEFT)              &kp LC(DOWN)   &kp LC(RIGHT)  &trans         &trans  &trans  &trans                 &trans        &kp LC(LS(TAB))  &trans  &kp LC(TAB)
 &trans                    &kp LG(X)                 &kp LG(C)      &kp LG(V)      &trans  &trans         &trans  &trans  &trans    &trans           &trans  &trans
 &trans                    &trans                    &trans         &trans         &trans  &trans         &tog 4  &trans                                     &trans
@@ -308,7 +308,7 @@
         // Windows/Android モード中のマウスレイヤー
         WIN_MOUSE {
             bindings = <
-&hold_kp LA(F4) LC(W)  &hold_kp LG(UP) LG(DOWN)  &kp LG(TAB)       &trans       &trans             &trans  &trans  &trans  &trans  &trans
+&hold_kp LA(F4) LC(W)  &hold_kp LG(UP) LG(DOWN)  &kp LG(TAB)       &none        &trans             &trans  &trans  &trans  &trans  &trans
 &kp LC(A)              &kp LC(LG(LEFT))          &none             &kp LC(LG(RIGHT))  &trans        &trans     &trans  &trans  &trans  &trans  &trans  &trans
 &trans                 &kp LC(X)                 &kp LC(C)         &kp LC(V)    &trans             &trans     &trans  &trans  &trans  &trans  &trans  &trans
 &trans                 &trans                    &trans            &trans       &trans             &trans     &trans  &trans                          &trans
