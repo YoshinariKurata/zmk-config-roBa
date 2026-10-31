@@ -211,7 +211,7 @@
             bindings = <
 &kp Q             &kp L         &kp U         &kp COMMA                    &lt_bt 6 DOT                                                   &kp F        &kp W  &lt 5 R    &kp Y    &kp P
 &kp E             &kp I         &kp A         &kp O                   &kp SLASH    &kp LS(LG(N3))            &kp MINUS      &kp K        &kp T  &kp N      &kp S    &kp H
-&kp Z             &kp X        &kp C         &kp V                   &kp SQT      &kp COLON                     &kp SEMICOLON  &kp G        &kp D  &kp M      &kp J    &kp B
+&kp Z             &kp X        &kp C         &kp V                   &hold_kp DOUBLE_QUOTES SQT  &kp COLON                     &kp SEMICOLON  &kp G        &kp D  &kp M      &kp J    &kp B
 &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &kana_eisu              &lt 2 SPACE  &lt_to_layer_0 3 LANG2       &kp TAB        &lt 1 ENTER                             &kp DEL
             >;
 
@@ -241,7 +241,7 @@
 &kp ESCAPE      &kp LC(LS(TAB))         &kp UP_ARROW    &kp LC(TAB)              &trans                       &trans  &trans  &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
 &kp LG(LEFT)    &kp LEFT_ARROW          &kp DOWN_ARROW  &kp RIGHT_ARROW          &kp LG(RIGHT)  &trans      &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
 &kp LEFT_SHIFT  &kp LC(LEFT_ARROW)      &trans          &kp LC(RIGHT_ARROW)      &trans         &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans                  &trans          &trans                   &trans   &trans      &trans  &trans                          &trans
+&trans          &trans                  &trans          &trans                   &trans   &trans      &kp LS(TAB)  &trans                     &trans
             >;
 
             sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
