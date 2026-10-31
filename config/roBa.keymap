@@ -147,15 +147,6 @@
     };
 
     behaviors {
-        lt_to_layer_0: lt_to_layer_0 {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LAYER_TAP_TO_0";
-            bindings = <&mo>, <&to_layer_0>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
-
         kana_eisu: kana_eisu {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -177,23 +168,15 @@
         lt_bt: lt_bt {
             compatible = "zmk,behavior-hold-tap";
             bindings = <&mo>, <&kp>;
-            flavor = "balanced";
+            flavor = "tap-preferred";
 
             #binding-cells = <2>;
-            tapping-term-ms = <250>;
+            tapping-term-ms = <1000>;
             quick-tap-ms = <175>;
             require-prior-idle-ms = <150>;
         };
 
         // Windows/Android モード用。&to 0 でモードが解除されないよう、レイヤー移動なしの版
-        lt_kp: lt_kp {
-            compatible = "zmk,behavior-hold-tap";
-            bindings = <&mo>, <&kp>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
-
         // タップでクリック、長押しでレイヤー (スクロール用)
         lt_mkp: lt_mkp {
             compatible = "zmk,behavior-hold-tap";
@@ -227,7 +210,7 @@
 &kp Q             &kp L         &kp U         &kp COMMA                    &lt_bt 6 DOT                                                   &kp F        &kp W  &kp R      &kp Y    &kp P
 &kp E             &kp I         &kp A         &kp O                   &kp SLASH    &kp LS(LG(N3))            &kp MINUS      &kp K        &kp T  &kp N      &kp S    &kp H
 &kp Z             &kp X        &kp C         &kp V                   &hold_kp DOUBLE_QUOTES SQT  &kp COLON                     &kp SEMICOLON  &kp G        &kp D  &kp M      &kp J    &kp B
-&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &kana_eisu              &lt 2 SPACE  &lt_to_layer_0 3 LANG2       &kp TAB        &lt 1 ENTER                             &kp DEL
+&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &kana_eisu              &kp SPACE    &mo 3                        &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
 
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
@@ -252,12 +235,13 @@
             >;
         };
 
+        // 左親指・右のキーを押している間: O で Tab、I で ⇧Tab、右親指・左で Del
         ARROW {
             bindings = <
-&kp ESCAPE      &kp LC(LS(TAB))         &kp UP_ARROW    &kp LC(TAB)              &trans                       &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2
-&kp LG(LEFT)    &kp LEFT_ARROW          &kp DOWN_ARROW  &kp RIGHT_ARROW          &kp LG(RIGHT)  &trans      &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
-&kp LEFT_SHIFT  &kp LC(LEFT_ARROW)      &trans          &kp LC(RIGHT_ARROW)      &trans         &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans                  &trans          &trans                   &trans   &trans      &kp LS(TAB)  &trans                     &trans
+&trans          &trans      &trans      &trans        &trans                      &trans  &trans  &trans  &trans  &trans
+&trans          &kp LS(TAB)  &trans     &kp TAB       &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&kp LEFT_SHIFT  &trans      &trans      &trans        &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans          &trans      &trans      &trans        &trans  &trans      &kp DEL  &trans                         &trans
             >;
 
             sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
@@ -298,11 +282,11 @@
 &trans    &trans    &trans     &trans          &trans                                 &trans  &trans  &trans  &trans  &trans
 &trans    &trans    &trans     &trans          &trans       &kp LG(PRINTSCREEN)     &trans  &trans  &trans  &trans  &trans  &trans
 &trans    &trans    &trans     &trans          &trans       &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&kp LGUI  &kp LALT  &kp LCTRL  &kana_eisu_win  &trans       &lt_kp 3 INT_MUHENKAN      &trans  &trans                  &trans
+&kp LGUI  &kp LALT  &kp LCTRL  &kana_eisu_win  &trans       &trans            &trans  &trans                  &trans
             >;
         };
 
-        // Windows/Android モード中に Space 長押し
+        // Windows/Android モード中の数字レイヤー
         WIN_NUM {
             bindings = <
 &trans     &trans     &trans     &trans     &trans                     &trans  &trans  &trans  &trans  &trans
@@ -312,13 +296,13 @@
             >;
         };
 
-        // Windows/Android モード中に英数長押し
+        // Windows/Android モード中に左親指・右のキーを押している間
         WIN_ARROW {
             bindings = <
-&trans    &trans            &trans  &trans             &trans                    &trans  &trans  &trans  &trans  &trans
-&kp HOME  &trans            &trans  &trans             &kp END  &trans   &trans  &trans  &trans  &trans  &trans  &trans
-&trans    &kp LC(LG(LEFT))  &trans  &kp LC(LG(RIGHT))  &trans   &trans   &trans  &trans  &trans  &trans  &trans  &trans
-&trans    &trans            &trans  &trans             &trans   &trans   &trans  &trans                          &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
         };
 
