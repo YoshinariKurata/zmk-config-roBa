@@ -88,11 +88,11 @@
     };
 
     macros {
-        to_layer_0: to_layer_0 {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
-            label = "TO_LAYER_0";
+        // Windows/Android モードを保ったまま数字レイヤーに入る
+        to_num_win: to_num_win {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&to 7>, <&tog 2>;
         };
 
         // 接続先の切り替えと同時に OS モードを切り替える (layer 7 = Windows/Android)
@@ -147,11 +147,28 @@
     };
 
     behaviors {
-        kana_eisu: kana_eisu {
+        // 左親指・右のキー: 1回で基本へ戻る、2回で数字レイヤー、長押しの間はレイヤー3
+        thumb_hold: thumb_hold {
+            compatible = "zmk,behavior-hold-tap";
+            bindings = <&mo>, <&to>;
+            flavor = "hold-preferred";
+
+            #binding-cells = <2>;
+            tapping-term-ms = <50>;
+        };
+
+        thumb_mac: thumb_mac {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&hold_kp LANG1 LANG2>, <&to_layer_0 LANG1>;
+            bindings = <&thumb_hold 3 0>, <&to 2>;
+        };
+
+        thumb_win: thumb_win {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&thumb_hold 3 7>, <&to_num_win>;
         };
 
         // タップと長押しで別のキーを送る (長押しはタイムアウトでのみ判定)
@@ -194,12 +211,6 @@
             bindings = <&kp F1>, <&kp F11>;
         };
 
-        kana_eisu_win: kana_eisu_win {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&hold_kp INT_HENKAN INT_MUHENKAN>, <&kp INT_HENKAN>;
-        };
     };
 
     keymap {
@@ -210,13 +221,13 @@
 &kp Q             &kp L         &kp U         &kp COMMA                    &lt_bt 6 DOT                                                   &kp F        &kp W  &kp R      &kp Y    &kp P
 &kp E             &kp I         &kp A         &kp O                   &kp SLASH    &kp LS(LG(N3))            &kp MINUS      &kp K        &kp T  &kp N      &kp S    &kp H
 &kp Z             &kp X        &kp C         &kp V                   &hold_kp DOUBLE_QUOTES SQT  &kp COLON                     &kp SEMICOLON  &kp G        &kp D  &kp M      &kp J    &kp B
-&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &kana_eisu              &kp SPACE    &mo 3                        &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
+&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mo 1                   &kp SPACE    &thumb_mac                   &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
 
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
         };
 
-        // 記号を置く予定。Enter 長押しで入る
+        // 記号を置く予定。左親指・左のキーか Enter 長押しで入る
         SYMBOL {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
@@ -228,18 +239,18 @@
 
         NUM {
             bindings = <
-&kp ESC  &sl 5   &none   &kp UP_ARROW   &none                    &kp N7  &kp N8  &kp N9  &none  &kp BACKSPACE
-&kp LG(A)  &none      &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW   &none    &none   &kp N4  &kp N5  &kp N6  &none  &kp ENTER
+&kp ESC  &sl 5   &kp UP_ARROW   &none   &none                    &kp N7  &kp N8  &kp N9  &none  &kp BACKSPACE
+&kp LG(A)  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none   &none    &none   &kp N4  &kp N5  &kp N6  &none  &kp ENTER
 &trans     &kp LG(X)  &kp LG(C)  &kp LG(V)  &none   &none    &trans  &kp N1  &kp N2  &kp N3  &none  &none
 &trans   &trans  &trans  &trans  &trans  &trans   &trans  &kp N0                         &none
             >;
         };
 
-        // 左親指・右のキーを押している間: O で Tab、I で ⇧Tab、右親指・左で Del
+        // 左親指・右のキーを押している間: O で Tab、I で ⇧Tab、右親指・左で Del、T でかな、N で英数
         ARROW {
             bindings = <
 &trans          &trans      &trans      &trans        &trans                      &trans  &trans  &trans  &trans  &trans
-&trans          &kp LS(TAB)  &trans     &kp TAB       &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans          &kp LS(TAB)  &trans     &kp TAB       &trans  &trans      &trans  &trans  &kp LANG1  &kp LANG2  &trans  &trans
 &kp LEFT_SHIFT  &trans      &trans      &trans        &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans          &trans      &trans      &trans        &trans  &trans      &kp DEL  &trans                         &trans
             >;
@@ -247,13 +258,13 @@
             sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
         };
 
-        // トラックボールを動かすと自動で入る。T の位置で抜ける
+        // トラックボールを動かすと自動で入る。左親指・右のキーを1回押すと抜ける
         MOUSE {
             bindings = <
 &hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &kp LC(UP)     &kp LC(LA(LS(LG(N))))  &none                  &none                  &none          &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
-&kp LG(A)                 &kp LC(LEFT)              &kp LC(DOWN)   &kp LC(RIGHT)  &none          &none   &none   &none                  &tog 4        &kp LC(LS(TAB))  &none  &kp LC(TAB)
+&kp LG(A)                 &kp LC(LEFT)              &kp LC(DOWN)   &kp LC(RIGHT)  &none          &none   &none   &none                  &none         &kp LC(LS(TAB))  &none  &kp LC(TAB)
 &none                     &kp LG(X)                 &kp LG(C)      &kp LG(V)      &none   &none          &none   &none   &none     &none            &none   &none
-&none                     &none                     &none          &none          &none   &none          &none   &none                                      &none
+&none                     &none                     &none          &none          &none   &trans         &none   &none                                      &none
             >;
         };
 
@@ -282,7 +293,7 @@
 &trans    &trans    &trans     &trans          &trans                                 &trans  &trans  &trans  &trans  &trans
 &trans    &trans    &trans     &trans          &trans       &kp LG(PRINTSCREEN)     &trans  &trans  &trans  &trans  &trans  &trans
 &trans    &trans    &trans     &trans          &trans       &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&kp LGUI  &kp LALT  &kp LCTRL  &kana_eisu_win  &trans       &trans            &trans  &trans                  &trans
+&kp LGUI  &kp LALT  &kp LCTRL  &trans          &trans       &thumb_win        &trans  &trans                  &trans
             >;
         };
 
@@ -300,7 +311,7 @@
         WIN_ARROW {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &kp INT_HENKAN  &kp INT_MUHENKAN  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
@@ -312,7 +323,7 @@
 &hold_kp LA(F4) LC(W)  &hold_kp LG(UP) LG(DOWN)  &kp LG(TAB)       &none        &trans             &trans  &trans  &trans  &trans  &trans
 &kp LC(A)              &kp LC(LG(LEFT))          &none             &kp LC(LG(RIGHT))  &trans        &none      &trans  &trans  &trans  &trans  &trans  &trans
 &trans                 &kp LC(X)                 &kp LC(C)         &kp LC(V)    &trans             &trans     &trans  &trans  &trans  &trans  &trans  &trans
-&none                  &none                     &none             &none        &trans             &none      &trans  &trans                          &trans
+&none                  &none                     &none             &none        &trans             &trans     &trans  &trans                          &trans
             >;
         };
 
