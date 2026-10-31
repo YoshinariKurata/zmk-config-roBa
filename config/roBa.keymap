@@ -30,6 +30,37 @@
     combos {
         compatible = "zmk,combos";
 
+        // - + K で英数、- + T でかな
+        eisu {
+            bindings = <&kp LANG2>;
+            key-positions = <16 17>;
+            layers = <0 1 2 3 4 5 6>;
+        };
+
+        kana {
+            bindings = <&kp LANG1>;
+            key-positions = <16 18>;
+            layers = <0 1 2 3 4 5 6>;
+        };
+
+        eisu_win {
+            bindings = <&kp INT_MUHENKAN>;
+            key-positions = <16 17>;
+            layers = <7 8 9 10 11>;
+        };
+
+        kana_win {
+            bindings = <&kp INT_HENKAN>;
+            key-positions = <16 18>;
+            layers = <7 8 9 10 11>;
+        };
+
+        // / + Tab で ⇧Tab
+        shift_tab {
+            bindings = <&kp LS(TAB)>;
+            key-positions = <14 15>;
+        };
+
         // ' + : でキーマップ図を表示 (Hammerspoon が ⌃⌥⇧⌘ + レイヤー番号を受け取る)
         keymap_l0 {
             bindings = <&kp LC(LA(LS(LG(N0))))>;
@@ -224,7 +255,7 @@
         default_layer {
             bindings = <
 &kp Q             &kp L         &kp U         &kp COMMA                    &lt_bt 6 DOT                                                   &kp F        &kp W  &kp R      &kp Y    &kp P
-&kp E             &kp I         &kp A         &kp O                   &kp SLASH    &kp LS(LG(N3))            &kp MINUS      &kp K        &kp T  &kp N      &kp S    &kp H
+&kp E             &kp I         &kp A         &kp O                   &kp SLASH    &kp TAB                   &kp MINUS      &kp K        &kp T  &kp N      &kp S    &kp H
 &kp Z             &kp X        &kp C         &kp V                   &hold_kp DOUBLE_QUOTES SQT  &kp COLON                     &kp SEMICOLON  &kp G        &kp D  &kp M      &kp J    &kp B
 &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mo 1                   &kp SPACE    &thumb_mac 3 0               &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
@@ -296,7 +327,7 @@
         WIN {
             bindings = <
 &trans    &trans    &trans     &trans          &trans                                 &trans  &trans  &trans  &trans  &trans
-&trans    &trans    &trans     &trans          &trans       &kp LG(PRINTSCREEN)     &trans  &trans  &trans  &trans  &trans  &trans
+&trans    &trans    &trans     &trans          &trans       &trans                  &trans  &trans  &trans  &trans  &trans  &trans
 &trans    &trans    &trans     &trans          &trans       &trans            &trans  &trans  &trans  &trans  &trans  &trans
 &kp LGUI  &kp LALT  &kp LCTRL  &trans          &trans       &thumb_win 3 0    &trans  &trans                  &trans
             >;
