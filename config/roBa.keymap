@@ -172,7 +172,7 @@
     };
 
     behaviors {
-        // 左親指・右のキー: 1回で基本へ戻る、2回で数字レイヤー、長押しの間はレイヤー3
+        // 左親指・右のキー: 1回で基本へ戻る、2回で数字レイヤー、長押しの間は Shift のあるレイヤー3
         // 外側を hold-tap にして、押してすぐ別のキーを押しても長押しとして扱う
         // 長押しは別のキーを押した時点で確定するので、hold-tap の時間は長めでも遅れない
         thumb_tap_mac: thumb_tap_mac {
@@ -276,19 +276,19 @@
         NUM {
             bindings = <
 &kp ESC  &sl 5   &kp UP_ARROW   &none   &none                    &none   &kp N7  &kp N8  &kp N9  &kp BACKSPACE
-&kp LG(A)  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none   &none    &none   &none   &kp N4  &kp N5  &kp N6  &kp ENTER
+&kp LG(A)  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none   &trans   &none   &none   &kp N4  &kp N5  &kp N6  &kp ENTER
 &trans     &kp LG(X)  &kp LG(C)  &kp LG(V)  &none   &none    &trans  &kp N0  &kp N1  &kp N2  &kp N3  &none
 &trans   &trans  &trans  &trans  &trans  &trans   &trans  &trans                         &none
             >;
         };
 
-        // 左親指・右のキーを押している間: O で Tab、I で ⇧Tab、右親指・左で Del、T でかな、N で英数
+        // 左親指・右のキーを押している間: Z の位置が Shift (置き場所が決まるまでの仮置き)
         ARROW {
             bindings = <
 &trans          &trans      &trans      &trans        &trans                      &trans  &trans  &trans  &trans  &trans
-&trans          &kp LS(TAB)  &trans     &kp TAB       &trans  &trans      &trans  &trans  &kp LANG1  &kp LANG2  &trans  &trans
+&trans          &trans      &trans      &trans        &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &kp LEFT_SHIFT  &trans      &trans      &trans        &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans      &trans      &trans        &trans  &trans      &kp DEL  &trans                         &trans
+&trans          &trans      &trans      &trans        &trans  &trans      &trans  &trans                          &trans
             >;
 
             sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
@@ -347,7 +347,7 @@
         WIN_ARROW {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &kp INT_HENKAN  &kp INT_MUHENKAN  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
