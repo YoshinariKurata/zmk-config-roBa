@@ -1,0 +1,548 @@
+<title>roBa キーマップ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one keyboard board drawn from roBa's real key coordinates, layer tabs above, combos and notes below */
+:root {
+  --bg: #eceef2;
+  --surface: #ffffff;
+  --key: #f7f8fa;
+  --key-edge: #cfd4dc;
+  --ink: #1c222c;
+  --muted: #687284;
+  --accent: #c4531b;
+  --accent-soft: #fbe9df;
+  --ball: #d9dde4;
+  --font-body: "IBM Plex Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-key: "JetBrains Mono", "IBM Plex Sans JP", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #13161b; --surface: #1b1f26; --key: #252a33; --key-edge: #3a414d;
+    --ink: #e6e9ef; --muted: #8d96a6; --accent: #f08a4b; --accent-soft: #3a261b; --ball: #2e343e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #13161b; --surface: #1b1f26; --key: #252a33; --key-edge: #3a414d;
+  --ink: #e6e9ef; --muted: #8d96a6; --accent: #f08a4b; --accent-soft: #3a261b; --ball: #2e343e;
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 28px; }
+/* Overlay mode (#overlay, opened from a key on the keyboard via Hammerspoon): every layer stacked as small cards to glance at while typing */
+/* Always dark, whatever the system theme: light text on a dark card stays readable over any window behind it */
+html.overlay:root {
+  --bg: #15171c; --key: #505765; --blank: rgba(255, 255, 255, .09); --ink: #ffffff; --muted: #7d8592; --accent: #ffa463; --key-edge: #434955;
+}
+html.overlay, html.overlay body { background: transparent; }
+html.overlay body { padding: 0; margin: 0; overflow: hidden; }
+html.overlay .wrap { max-width: none; display: block; position: relative; }
+html.overlay header, html.overlay .modebar, html.overlay #tabs, html.overlay .how, html.overlay .detail, html.overlay .grid2, html.overlay footer, html.overlay .copybar, html.overlay .legend { display: none; }
+/* The normal panel stays laid out at card width but invisible: render() and fitCaps() measure there, then the board is copied into a card */
+html.overlay .panel { position: absolute; left: 0; right: 0; top: 0; visibility: hidden; display: block; padding: 6px; border: 0; }
+html.overlay .scroller { overflow: hidden; }
+html.overlay .board { min-width: 0; }
+.stack { display: none; }
+html.overlay .stack { display: flex; flex-direction: column; gap: 6px; }
+/* #overlay=top: three cards in a row along the top of the screen */
+html.overlay.top .stack { flex-direction: row; }
+html.overlay.top .card { flex: 1 1 0; min-width: 0; }
+html.overlay.top .panel { right: auto; width: calc((100% - 12px) / 3); box-sizing: border-box; }
+.card {
+  position: relative; padding: 6px; border-radius: 14px; pointer-events: none;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+}
+.minilabel {
+  position: absolute; top: 5px; left: 50%; transform: translateX(-50%); margin: 0; white-space: nowrap;
+  font: 700 10px/1.3 var(--font-body); color: var(--ink);
+}
+html.overlay .cap { background: var(--key); border: 0; box-shadow: none; overflow-wrap: normal; line-break: strict; border-radius: 1.2cqw; justify-content: safe center; }
+html.overlay .key.trans .cap { background: var(--blank); opacity: 1; }
+html.overlay .key.none .cap { background: var(--blank); }
+html.overlay .key.none .note { font-size: 0; }
+html.overlay .key.none .note::after { content: '×'; font-size: 2.2cqw; color: var(--muted); }
+html.overlay .key.trigger .cap { background: var(--accent); border: 0; }
+html.overlay .key.trigger .cap .t, html.overlay .key.trigger .cap .h { color: var(--bg); }
+html.overlay .cap .t { font-size: calc(3.2cqw * var(--fs)); }
+html.overlay .cap .t.long { font-size: calc(2.1cqw * var(--fs)); }
+html.overlay .cap .h { font-size: calc(1.9cqw * var(--fs)); }
+html.overlay .cap .note { font-size: calc(1.7cqw * var(--fs)); }
+html.overlay .ball { background: var(--blank); border: 0; font-size: 0; }
+header h1 { font-size: 1.6rem; margin: 0; text-wrap: balance; }
+header p { margin: 4px 0 0; color: var(--muted); }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button {
+  font: 500 0.9rem var(--font-body); color: var(--ink); background: var(--surface);
+  border: 1px solid var(--key-edge); border-radius: 999px; padding: 6px 14px; cursor: pointer;
+}
+.tabs button .n { font-family: var(--font-key); color: var(--muted); margin-right: 6px; font-size: 0.8rem; }
+.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tabs button[aria-selected="true"] .n { color: inherit; opacity: .7; }
+.tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.modebar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: -16px; }
+.modelabel { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.08em; }
+#modes button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.panel { background: var(--surface); border: 1px solid var(--key-edge); border-radius: 14px; padding: 18px; display: grid; gap: 14px; }
+.how { margin: 0; font-size: 0.95rem; }
+.how b { color: var(--accent); }
+.scroller { overflow-x: auto; }
+.board { position: relative; min-width: 640px; aspect-ratio: 13.6 / 5.05; container-type: inline-size; }
+.key { position: absolute; width: calc(100% / 13.6); height: calc(100% / 5.05); padding: 0.3cqw; box-sizing: border-box; }
+.cap {
+  height: 100%; box-sizing: border-box; border-radius: 0.9cqw; background: var(--key);
+  border: 1px solid var(--key-edge); box-shadow: 0 0.25cqw 0 var(--key-edge);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  gap: 0.15cqw; padding: 0.3cqw; overflow: hidden; overflow-wrap: anywhere; --fs: 1;
+}
+.cap .t { font: 700 calc(1.75cqw * var(--fs))/1.15 var(--font-key); }
+.cap .t.long { font-size: calc(1.3cqw * var(--fs)); font-family: var(--font-body); }
+.cap .h { font: 500 calc(1.1cqw * var(--fs))/1.2 var(--font-body); color: var(--accent); }
+.cap .note { font: 400 calc(1.1cqw * var(--fs))/1.2 var(--font-body); color: var(--muted); }
+.detail { margin: 0; min-height: 3em; font-size: 0.9rem; line-height: 1.5; padding: 8px 12px; border-radius: 8px; background: var(--bg); }
+.detail b { font-weight: 700; }
+.detail .hl { color: var(--accent); font-weight: 500; }
+.detail .muted { color: var(--muted); }
+button.key { background: none; border: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; }
+button.key:hover .cap { border-color: var(--accent); }
+button.key:focus-visible { outline: none; }
+button.key:focus-visible .cap { outline: 2px solid var(--accent); outline-offset: 1px; }
+.key.sel .cap { outline: 3px solid var(--accent); outline-offset: 1px; opacity: 1; }
+.key.trans .cap { background: transparent; border-style: dashed; box-shadow: none; opacity: .45; }
+.key.none .cap { background: var(--bg); box-shadow: none; }
+.key.trigger .cap { background: var(--accent-soft); border: 2px solid var(--accent); box-shadow: none; }
+.key.trigger .cap .h { font-weight: 700; }
+.ball {
+  position: absolute; border-radius: 50%; background: var(--ball); border: 1px solid var(--key-edge);
+  display: grid; place-items: center; text-align: center; font: 500 1.15cqw/1.3 var(--font-body); color: var(--muted);
+}
+.ball.on { border: 2px solid var(--accent); color: var(--accent); background: var(--accent-soft); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 0.85rem; color: var(--muted); margin: 0; padding: 0; list-style: none; }
+.legend span.sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; border: 1px solid var(--key-edge); background: var(--key); }
+.legend span.sw.tr { background: var(--accent-soft); border: 2px solid var(--accent); }
+.legend span.sw.tp { background: transparent; border-style: dashed; }
+.legend span.hl { color: var(--accent); font-weight: 500; }
+
+.copybar { display: grid; gap: 8px; border-top: 1px solid var(--key-edge); padding-top: 12px; }
+.copybar .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: 0.9rem; }
+.copybar output {
+  display: block; min-width: 0; white-space: pre-wrap; word-break: break-word; user-select: all;
+  font: 500 0.9rem/1.6 var(--font-body); background: var(--key); border: 1px solid var(--key-edge); border-radius: 8px; padding: 8px 12px;
+}
+.copybar output.empty { color: var(--muted); user-select: none; }
+.copybar button {
+  font: 500 0.85rem var(--font-body); color: var(--ink); background: var(--surface);
+  border: 1px solid var(--key-edge); border-radius: 999px; padding: 4px 12px; cursor: pointer;
+}
+.copybar button:focus-visible, .copybar input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toast {
+  position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  background: var(--ink); color: var(--bg); padding: 8px 16px; border-radius: 999px; font-size: 0.9rem; z-index: 20;
+  max-width: calc(100% - 32px);
+}
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+section h2 { font-size: 1.1rem; margin: 0 0 10px; }
+.combos { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.combos li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+kbd {
+  font: 700 0.85rem var(--font-key); background: var(--surface); border: 1px solid var(--key-edge);
+  border-bottom-width: 3px; border-radius: 6px; padding: 1px 8px; min-width: 1.4em; text-align: center; display: inline-block;
+}
+.combos .arrow { color: var(--muted); }
+.combos .res { font-weight: 500; }
+.notes { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+.notes li { min-width: 0; }
+footer { color: var(--muted); font-size: 0.8rem; }
+@media (prefers-reduced-motion: no-preference) { .cap { transition: background .15s, border-color .15s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>roBa キーマップ（Mac 版）</h1>
+    <p>YoshinariKurata/zmk-config-roBa の config/roBa.keymap をそのまま図にしたものです。左が左手側、右がトラックボールのある右手側です。</p>
+  </header>
+
+  <div class="modebar">
+    <span class="modelabel">モード</span>
+    <div class="tabs" id="modes">
+      <button type="button" data-mode="mac">Mac（接続先 1・2）</button>
+      <button type="button" data-mode="win">Windows・Android（接続先 3・4）</button>
+    </div>
+  </div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+
+  <div class="panel">
+    <p class="how" id="how"></p>
+    <div class="scroller"><div class="board" id="board"></div></div>
+    <p class="detail" id="detail" aria-live="polite"><span class="muted">キーにカーソルを合わせる（スマホではタップする）と、ここに詳しい説明が出ます。</span></p>
+    <ul class="legend">
+      <li><span class="sw"></span>タップで入力</li>
+      <li><span class="hl">オレンジの小さい文字</span> = 長押ししたときの動き</li>
+      <li><span class="sw tr"></span>このレイヤーに入るために押したままにするキー</li>
+      <li><span class="sw tp"></span>空欄 = 基本レイヤーと同じキー</li>
+      <li>「なし」= 何も入力されないキー</li>
+    </ul>
+    <div class="copybar">
+      <div class="row">
+        <label><input type="checkbox" id="multi"> 複数のキーをまとめてコピー</label>
+        <button type="button" id="clear">選択を解除</button>
+      </div>
+      <output id="out" class="empty">キーを押すと「L0 のこの場所」という説明をコピーします。そのままチャットに貼り付けて変更を頼めます。</output>
+    </div>
+  </div>
+  <div class="toast" id="toast" hidden></div>
+
+  <div class="stack" id="stack"></div>
+
+  <div class="grid2">
+    <section>
+      <h2>同時押し（コンボ）</h2>
+      <ul class="combos">
+        <li><kbd>/</kbd><kbd>K</kbd><span class="arrow">→</span><span class="res">英数</span></li>
+        <li><kbd>/</kbd><kbd>T</kbd><span class="arrow">→</span><span class="res">かな</span></li>
+        <li><kbd>-</kbd><kbd>Tab</kbd><span class="arrow">→</span><span class="res">Shift + Tab</span></li>
+        <li><kbd>'</kbd><kbd>:</kbd><span class="arrow">→</span><span class="res">今のレイヤーのキーマップ図を表示（Mac・Hammerspoon）</span></li>
+      </ul>
+    </section>
+    <section>
+      <h2>覚えておくこと</h2>
+      <ul class="notes">
+        <li>長押しは 0.2 秒以上。短く押すとタップ側が入力されます。</li>
+        <li><b>左親指・右のキー</b>: 1回押しで基本へ戻る（どのレイヤーからでも）、2回押しで数字レイヤー。長押ししている間は Z の位置が Shift（仮置き）。</li>
+        <li>かな / 英数は / と T / K の同時押し、Tab は左手・上から2段目の一番内側、⇧Tab は - と Tab の同時押し。</li>
+        <li><b>左親指・左のキーを押しながら</b> T で !、N で ?、K で「」、S で（）、W で『』、R で［］、Y で【】、H で …。括弧はペアで入力されてカーソルが中に入ります（Mac・Hammerspoon。入力中はクリップボードを一瞬使います）。</li>
+        <li>. を<b>1秒</b>押し続けると<b>設定・BT</b>。合図は出ないので、1秒待ってから右手で接続先を押します。</li>
+        <li>右親指・左のキーが ⌫。</li>
+        <li>トラックボールを動かすと<b>マウスレイヤー</b>に入り、R / Y / P がクリックになります（Y 長押しでスクロール）。<b>左親指・右のキーを1回</b>押すと元に戻ります。戻さなければ 10 分間そのままで、その間は文字を打てません。数字レイヤー中にボールを動かしたときも同じです。</li>
+        <li>マウスレイヤー中の Q は<b>タップで今のウィンドウを閉じる</b>（⌘W）、<b>長押しで全部閉じる</b>（⌥⌘W）。</li>
+        <li>マウスレイヤーの左手: L で最小化（長押しでフルスクリーン）、U / I / A / O が矢印キーの形で、U（上）が Mission Control、I / O（左右）がデスクトップ移動、A（下）がアプリのウィンドウ一覧。E がすべて選択、X / C / V がカット / コピー / 貼り付け、, の位置で通知を消す、左手・上から2段目の一番内側でスクリーンショット。右手の F の位置で Finder、N / H で前 / 次のタブ。</li>
+        <li>スクロールはマウスレイヤーの Y を押したままトラックボールを転がします。Y を押している間は数字の位置が F キーになるので、R の左クリックは F8 になります。</li>
+        <li>F キー: 数字レイヤーで L の位置を押し、次に数字。0 の位置で F10、1 の2回押しで F11、1 と 2 の同時押しで F12。F1 は少し遅れて入力されます。</li>
+        <li><code>'</code> のキーは長押しで <code>"</code>。</li>
+        <li>ロータリーエンコーダ（左手側）は PgUp / PgDn。左親指・右のキーを押している間は ⌃PgUp / ⌃PgDn です。</li>
+        <li>かな・英数は Mac の日本語入力（ローマ字入力）が入っていると動きます。キーボードの種類は ANSI にしてください。</li>
+        <li>モードは<b>接続先を切り替えるキー</b>で決まります。. を1秒押したまま F・W で Mac、R・Y で Windows・Android。電源を入れ直すと Mac モードに戻るので、接続先 3・4 のときはもう一度 R / Y を押してください。</li>
+        <li>Windows・Android モードの英数/かなは無変換/変換を送ります。Windows では Microsoft IME の設定で「無変換＝IME オフ、変換＝IME オン」にしてください。</li>
+      </ul>
+    </section>
+  </div>
+  <footer>2026-11-10 時点のキーマップ（大西配列、F キー切り替え、接続先ごとの Mac / Windows・Android モード、自動マウスレイヤー対応版）。</footer>
+</div>
+
+<script>
+// Physical positions from config/roBa.json (units of 1 key). r = rotation in degrees around the key centre.
+const POS = [
+  [0,.616],[1.003,.247],[2.005,0],[3.008,.132],[4.011,.263],[8.504,.264],[9.506,.133],[10.509,.001],[11.512,.248],[12.514,.617],
+  [0,1.618],[1.003,1.25],[2.005,1.003],[3.008,1.134],[4.011,1.266],[5.015,1.504],[7.501,1.505],[8.504,1.267],[9.506,1.135],[10.509,1.004],[11.512,1.251],[12.514,1.619],
+  [0,2.621],[1.003,2.253],[2.005,2.005],[3.008,2.137],[4.011,2.268],[5.013,2.507],[7.501,2.508],[8.504,2.269],[9.506,2.138],[10.509,2.006],[11.512,2.254],[12.514,2.622],
+  [0,3.624],[1.003,3.255],[2.004,3.007],[3.219,3.525],[4.342,3.617,9],[5.451,3.909,20],[7.059,3.91,-20],[8.158,3.616,-10],[12.514,3.625]
+];
+const W = 13.6, H = 5.05;
+const _ = '';
+const k = (t, h, note) => ({ t, h, note });
+const T = n => Array(n).fill(_);
+const N = { none: true, t: 'なし' };
+
+const LAYERS = [
+  { name: '基本', how: 'ふだんの入力。親指キーはタップと長押しで役割が変わります。', trigger: null, keys: [
+    'Q','L','U',',',k('.','設定・BT','短く押すと .、1秒長押しで設定・BT'), 'F','W','R','Y','P',
+    'E','I','A','O','-',k('Tab'), '/','K','T','N','S','H',
+    'Z','X','C','V',k("'",'"','短く押すと \'、長押しで "'),':', ';','G','D','M','J','B',
+    k('⌃','','Control'),k('⌥','','Option'),k('⌘','','Command'),k('記号',_,'押している間 記号レイヤー'),k('Space'),k('切替','Shift','1回で基本へ戻る、2回で数字レイヤー、長押しの間は Z の位置が Shift'),
+    k('⌫',_,'Backspace'),k('Enter'),k('Del','','前方削除')
+  ]},
+  { name: '記号', how: '<b>左親指・左のキーを押したまま</b>。T で !、N で ?。括弧はペアで入力されて、カーソルが中に入ります（Mac・Hammerspoon）。ほかの記号はこれから置きます。', trigger: 37, keys: [
+    ...T(5), _,k('『』',_,'ペアで入力、カーソルは中'),k('［］',_,'ペアで入力、カーソルは中'),k('【】',_,'ペアで入力、カーソルは中'),_,
+    ...T(6), _,k('「」',_,'ペアで入力、カーソルは中'),'!','?',k('（）',_,'ペアで入力、カーソルは中'),k('…',_,'三点リーダー'),
+    ...T(12),
+    ...T(9)
+  ]},
+  { name: '数字', how: '<b>左親指・右のキーを2回押す</b>と入り、1回押すと基本に戻ります。右手がテンキー（N が 5、G が 0）、左手は U I A O が矢印、ほかにすべて選択・取り消し・カット・コピー・ペースト。L の位置を押すと次の1キーが F キーになります。数字の左に - 、, 、¥（日本語入力中は「円」）。基本と同じ位置の Tab も使えます。「なし」は何も入力されません。', trigger: null, keys: [
+    'Esc',k('F キー',_,'次の1キーを F キーにする（約1秒で解除）'),'↑',N,N, '-','7','8','9',N,
+    k('⌘A',_,'すべて選択'),'←','↓','→',N,k('Tab'), k('¥',_,'日本語入力中は「円」（Mac・Hammerspoon）'),',','4','5','6',N,
+    k('⌘Z',_,'取り消す'),k('⌘X',_,'カット'),k('⌘C',_,'コピー'),k('⌘V',_,'ペースト'),N,N, _,'0','1','2','3',N,
+    ...T(6), k('⌫',_,'Backspace（基本と同じ）'),k('Enter',_,'基本と同じ'),N
+  ]},
+  { name: 'Shift（仮）', how: '<b>左親指・右のキーを押したまま</b>。Z の位置が Shift です。置き場所が決まるまでの仮置きです。', trigger: 39, keys: [
+    ...T(5), ...T(5),
+    ...T(12),
+    k('⇧',_,'Shift'),...T(5), ...T(6),
+    ...T(6), ...T(3)
+  ]},
+  { name: 'マウス', how: '<b>トラックボールを動かすと自動で入ります</b>。左親指・右のキーを1回押すと基本に戻ります（押さなければ 10 分間このまま）。「なし」のキーは何も入力されません。', trigger: 'ball', keys: [
+    k('閉じる','全部閉じる','タップ ⌘W・長押し ⌥⌘W'),k('最小化','フルスクリーン','タップ ⌘M・長押し ⌃⌘F'),k('Mission Control',_,'⌃↑・開いているウィンドウを一覧'),k('通知を消す',_,'右上に出ている通知を閉じる（Mac・Hammerspoon）'),N, k('Finder',_,'Finder を前に出す。ウィンドウがなければホームを開く（Mac・Hammerspoon）'),N,k('左クリック'),k('中クリック','スクロール'),k('右クリック'),
+    k('⌘A',_,'すべて選択'),k('⌃←',_,'左のデスクトップ'),k('アプリのウィンドウ',_,'⌃↓・今のアプリのウィンドウだけ一覧'),k('⌃→',_,'右のデスクトップ'),N,k('スクショ',_,'⇧⌘3・画面全体をデスクトップに保存'), N,N,N,k('前のタブ',_,'⌃⇧Tab'),N,k('次のタブ',_,'⌃Tab'),
+    N,k('⌘X',_,'カット'),k('⌘C',_,'コピー'),k('⌘V',_,'ペースト'),N,N, N,N,N,N,N,N,
+    N,N,N,N,N,k('戻る',_,'1回で基本へ戻る'), N,N,N
+  ]},
+  { name: 'スクロール・F キー', how: '<b>マウスレイヤーの Y を押したまま</b>トラックボールを転がすとスクロールします。<b>数字レイヤーの L の位置</b>を押すと、次の1キーが F キーになります（0 の位置で F10、1 の2回押しで F11、1 と 2 の同時押しで F12）。', trigger: 8, ball: 'スクロール', keys: [
+    ...T(5), _,'F7','F8','F9',_,
+    ...T(6), _,_,'F4','F5','F6',_,
+    ...T(6), _,'F10',k('F1','2回 F11','2回押しで F11'),k('F2','1と F12','1 と同時押しで F12'),'F3',_,
+    ...T(6), _,_,_
+  ]},
+  { name: '設定・BT', how: '<b>. を1秒押したまま</b>。Bluetooth の接続先（とモード）を切り替えたり、ペアリングを解除したりします。', trigger: 4, keys: [
+    ...T(5), k('BT 1',_,'MacBook・Mac'),k('BT 2',_,'iMac・Mac'),k('BT 3',_,'Android・Win'),k('BT 4',_,'Windows・Win'),k('BT 5',_,'接続先5'),
+    ...T(12),
+    ...T(6), _,_,_,_,_,k('BT 解除',_,'今の接続先'),
+    ...T(6), _,_,k('全 BT',_,'すべて解除')
+  ]}
+];
+
+// Windows/Android mode (connections 3 and 4): only the keys that differ from Mac, per layer
+const WIN = {
+  1: { 6: N, 7: N, 8: N, 17: N, 20: N, 21: N },
+  0: {
+    34: k('Win', '', 'Windows キー'), 35: k('Alt'), 36: k('Ctrl'),
+    37: k('英数', 'かな', '無変換 / 変換'),
+  },
+  2: { 10: k('Ctrl+A', _, 'すべて選択'), 16: N, 22: k('Ctrl+Z', _, '取り消す'), 23: k('Ctrl+X', _, 'カット'), 24: k('Ctrl+C', _, 'コピー'), 25: k('Ctrl+V', _, 'ペースト') },
+  4: {
+    0: k('閉じる', 'アプリを閉じる', 'タップ Ctrl+W・長押し Alt+F4'),
+    1: k('最小化', '最大化', 'タップ Win+↓・長押し Win+↑'), 2: k('タスクビュー', _, 'Win+Tab'), 3: N, 5: k('エクスプローラー', _, 'Win+E'), 10: k('Ctrl+A', _, 'すべて選択'), 11: k('⊞⌃←', _, '左のデスクトップ'), 12: N, 13: k('⊞⌃→', _, '右のデスクトップ'), 15: k('スクショ', _, 'Win+PrtScn・画面全体をピクチャ\\スクリーンショットに保存'), 23: k('Ctrl+X', _, 'カット'), 24: k('Ctrl+C', _, 'コピー'), 25: k('Ctrl+V', _, 'ペースト'),
+  },
+};
+const MODE_NAME = { mac: 'Mac', win: 'Windows・Android' };
+let mode = 'mac';
+function keyAt(li, i) {
+  if (mode === 'win' && WIN[li] && i in WIN[li]) return WIN[li][i];
+  return LAYERS[li].keys[i];
+}
+
+const tabs = document.getElementById('tabs');
+const board = document.getElementById('board');
+const how = document.getElementById('how');
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+const out = document.getElementById('out');
+const multi = document.getElementById('multi');
+const toastEl = document.getElementById('toast');
+let current = 0;
+let picked = [];   // [{id, text}]
+let toastTimer;
+
+const GROUPS = [[0, 9], [10, 21], [22, 33], [34, 42]];
+const ROWS = ['上から1段目', '上から2段目', '上から3段目', '最下段'];
+function place(i) {
+  if (i >= 37 && i <= 39) return `左親指・${['左', '真ん中', '右'][i - 37]}のキー`;
+  if (i === 40 || i === 41) return `右親指・${['左', '右'][i - 40]}のキー`;
+  const g = GROUPS.findIndex(([a, b]) => i >= a && i <= b);
+  const [a, b] = GROUPS[g];
+  const x = POS[i][0], left = x < 6.5;
+  let n = 1;
+  for (let j = a; j <= b; j++) {
+    const xj = POS[j][0];
+    if (j === i || (xj < 6.5) !== left || (j >= 37 && j <= 41)) continue;
+    if (left ? xj < x : xj > x) n++;
+  }
+  return `${left ? '左手' : '右手'}・${ROWS[g]}・${left ? '左' : '右'}から${n}番目`;
+}
+function label(d) { return typeof d === 'string' ? d : d.t; }
+function describe(li, i) {
+  const L = LAYERS[li];
+  let d = keyAt(li, i);
+  const base = keyAt(0, i);
+  let now;
+  if (L.trigger === i) now = `${label(base)}（このレイヤーに入るために押したままにするキー）`;
+  else if (d === _) now = `空欄＝基本と同じ「${label(base)}」`;
+  else if (d.none) now = '割り当てなし';
+  else {
+    if (typeof d === 'string') d = { t: d };
+    now = d.t + (d.h ? ` / 長押し: ${d.h}` : '') + (d.note ? ` / ${d.note}` : '');
+  }
+  return `[${MODE_NAME[mode]}・L${L.n ?? li} ${L.name}] ${place(i)}（今: ${now}）`;
+}
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toastEl.hidden = true; }, 2200);
+}
+function copyText(text) {
+  out.textContent = text || 'キーを押すと「L0 のこの場所」という説明をコピーします。そのままチャットに貼り付けて変更を頼めます。';
+  out.classList.toggle('empty', !text);
+  if (!text) return;
+  const done = () => toast('コピーしました');
+  const fail = () => {
+    const sel = window.getSelection(), range = document.createRange();
+    range.selectNodeContents(out); sel.removeAllRanges(); sel.addRange(range);
+    toast('自動でコピーできませんでした。選択された文字を ⌘C でコピーしてください');
+  };
+  try { navigator.clipboard.writeText(text).then(done, fail); } catch (e) { fail(); }
+}
+function pick(li, i) {
+  showDetail(li, i);
+  const id = `${mode}:${li}:${i}`, text = describe(li, i);
+  if (multi.checked) {
+    const k = picked.findIndex(p => p.id === id);
+    if (k >= 0) picked.splice(k, 1); else picked.push({ id, text });
+  } else {
+    picked = [{ id, text }];
+  }
+  copyText(picked.map(p => p.text).join('\n'));
+  render(li);
+}
+document.getElementById('clear').addEventListener('click', () => { picked = []; copyText(''); render(current); });
+multi.addEventListener('change', () => { if (!multi.checked && picked.length > 1) { picked = picked.slice(-1); copyText(picked[0].text); render(current); } });
+
+// Shrink each keycap's text until it fits inside the cap (sizes are in cqw, so the ratio holds at any width)
+function fitCaps() {
+  board.querySelectorAll('.cap').forEach(cap => {
+    let fs = 1;
+    cap.style.setProperty('--fs', fs);
+    while (fs > 0.45 && (cap.scrollHeight > cap.clientHeight + 1 || cap.scrollWidth > cap.clientWidth + 1)) {
+      fs -= 0.05;
+      cap.style.setProperty('--fs', fs.toFixed(2));
+    }
+  });
+}
+if ('ResizeObserver' in window) {
+  let lastW = 0;
+  new ResizeObserver(([e]) => {
+    const w = Math.round(e.contentRect.width);
+    if (w && Math.abs(w - lastW) > 40) { lastW = w; fitCaps(); }
+  }).observe(board);
+}
+const detail = document.getElementById('detail');
+function showDetail(li, i) {
+  const L = LAYERS[li];
+  let d = keyAt(li, i);
+  if (typeof d === 'string') d = d === _ ? null : { t: d };
+  let html = `<span class="muted">${esc(place(i))}</span><br>`;
+  if (L.trigger === i) {
+    html += `<b>${esc(label(keyAt(0, i)))}</b> を押したままにすると、このレイヤーに入ります。`;
+  } else if (!d) {
+    const base = keyAt(0, i);
+    html += `空欄: 基本レイヤーと同じ <b>${esc(label(base) || '')}</b>`;
+  } else if (d.none) {
+    html += '何も入力されません。';
+  } else {
+    html += `タップ: <b>${esc(d.t)}</b>`;
+    if (d.note) html += `（${esc(d.note)}）`;
+    if (d.h) html += `　<span class="hl">長押し: ${esc(d.h)}</span>`;
+  }
+  detail.innerHTML = html;
+}
+
+function render(li) {
+  const L = LAYERS[li];
+  current = li;
+  how.innerHTML = L.how;
+  board.innerHTML = '';
+  POS.forEach(([x, y, r], i) => {
+    let d = keyAt(li, i);
+    if (typeof d === 'string') d = d === _ ? null : { t: d };
+    const el = document.createElement('button');
+    el.type = 'button';
+    el.className = 'key';
+    if (picked.some(p => p.id === `${mode}:${li}:${i}`)) el.classList.add('sel');
+    el.setAttribute('aria-label', describe(li, i));
+    el.addEventListener('click', () => pick(li, i));
+    el.style.left = (x / W * 100) + '%';
+    el.style.top = (y / H * 100) + '%';
+    if (r) el.style.transform = `rotate(${r}deg)`;
+    let html = '';
+    if (L.trigger === i) {
+      el.classList.add('trigger');
+      const base = keyAt(0, i);
+      html =`<span class="t long">${esc(typeof base === 'string' ? base : base.t)}</span><span class="h">押したまま</span>`;
+    } else if (!d) {
+      el.classList.add('trans');
+    } else if (d.none) {
+      el.classList.add('none');
+      html = '<span class="note">なし</span>';
+    } else {
+      const longT = d.t.length > 3 && /[^\x00-\x7F]/.test(d.t) || d.t.length > 5;
+      html = `<span class="t${longT ? ' long' : ''}">${esc(d.t)}</span>`;
+      if (d.h) html += `<span class="h">${esc(d.h)}</span>`;
+    }
+    el.innerHTML = `<div class="cap">${html}</div>`;
+    el.addEventListener('mouseenter', () => showDetail(li, i));
+    el.addEventListener('focus', () => showDetail(li, i));
+    board.appendChild(el);
+  });
+  fitCaps();
+  const ball = document.createElement('div');
+  ball.className = 'ball' + (L.trigger === 'ball' || L.ball ? ' on' : '');
+  const size = 1.75;
+  ball.style.width = (size / W * 100) + '%';
+  ball.style.height = (size / H * 100) + '%';
+  ball.style.left = ((10.95 - size / 2) / W * 100) + '%';
+  ball.style.top = ((4.15 - size / 2) / H * 100) + '%';
+  ball.textContent = L.ball || (L.trigger === 'ball' ? '動かすと\nマウス' : 'トラックボール');
+  ball.style.whiteSpace = 'pre-line';
+  board.appendChild(ball);
+  [...tabs.children].forEach((b, j) => b.setAttribute('aria-selected', j === li));
+  try { localStorage.setItem('roba-layer', li); } catch (e) {}
+}
+
+LAYERS.forEach((L, i) => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.role = 'tab'; b.id = 'tab-' + i;
+  b.innerHTML = `<span class="n">L${L.n ?? i}</span>${L.name}`;
+  b.addEventListener('click', () => render(i));
+  tabs.appendChild(b);
+});
+const modeBtns = [...document.querySelectorAll('#modes button')];
+function setMode(m) {
+  mode = m;
+  modeBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === m));
+  try { localStorage.setItem('roba-mode', m); } catch (e) {}
+  render(current);
+}
+modeBtns.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+try { if (localStorage.getItem('roba-mode') === 'win') mode = 'win'; } catch (e) {}
+modeBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === mode));
+let start = 0;
+try { const s = parseInt(localStorage.getItem('roba-layer'), 10); if (s >= 0 && s < LAYERS.length) start = s; } catch (e) {}
+// #overlay — every layer as a card, used by the Hammerspoon overlay. A layer with no keys of its own is left out.
+// #overlay=top — only スクロール・F キー, 基本 and 数字, with 基本 in the middle.
+function renderStack(top) {
+  const stack = document.getElementById('stack');
+  stack.innerHTML = '';
+  (top ? [5, 0, 2] : LAYERS.map((L, i) => L.n ?? i)).forEach(n => {
+    const li = LAYERS.findIndex((L, i) => (L.n ?? i) === n);
+    const L = LAYERS[li];
+    if (L.keys.every(key => key === _)) return;
+    render(li);
+    const card = document.createElement('div');
+    card.className = 'card';
+    const label = document.createElement('p');
+    label.className = 'minilabel';
+    label.textContent = L.name;
+    const copy = board.cloneNode(true);
+    copy.removeAttribute('id');
+    card.append(label, copy);
+    stack.appendChild(card);
+  });
+}
+// #layer=<keymap layer number> — open the page on a layer
+function applyHash() {
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.has('overlay')) {
+    const top = h.get('overlay') === 'top';
+    document.documentElement.classList.add('overlay');
+    document.documentElement.classList.toggle('top', top);
+    if (mode !== 'mac') { mode = 'mac'; modeBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === mode)); }
+    renderStack(top);
+    if (document.fonts) document.fonts.ready.then(() => renderStack(top));
+    return true;
+  }
+  document.documentElement.classList.remove('overlay', 'top');
+  if (!h.has('layer')) return false;
+  const n = parseInt(h.get('layer'), 10);
+  const li = LAYERS.findIndex((L, i) => (L.n ?? i) === n);
+  render(li >= 0 ? li : current);
+  return true;
+}
+window.addEventListener('hashchange', applyHash);
+if (!applyHash()) render(start);
+</script>
