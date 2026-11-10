@@ -169,6 +169,11 @@
             if-layers = <7 5>;
             then-layer = <11>;
         };
+
+        win_symbol {
+            if-layers = <7 1>;
+            then-layer = <12>;
+        };
     };
 
     behaviors {
@@ -263,11 +268,11 @@
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
         };
 
-        // 記号レイヤー。左親指・左のキーを押している間。T の位置が !、N の位置が ? (ほかはこれから置く)
+        // 記号レイヤー。左親指・左のキーを押している間。括弧は Hammerspoon がペアで入力してカーソルを中に置く (⌃⌥⇧⌘ + B J K L M、… は O)。T の位置が !、N の位置が ? (ほかはこれから置く)
         SYMBOL {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &kp EXCL  &kp QMARK  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &kp LC(LA(LS(LG(K))))  &kp LC(LA(LS(LG(L))))  &kp LC(LA(LS(LG(M))))  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &kp LC(LA(LS(LG(B))))  &kp EXCL  &kp QMARK  &kp LC(LA(LS(LG(J))))  &kp LC(LA(LS(LG(O))))
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
@@ -368,6 +373,16 @@
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
+            >;
+        };
+
+        // Windows/Android モード中の記号レイヤー。Windows では ⌃⌥⇧⌘ が Office を開くので、括弧のキーは何もしない
+        WIN_SYMBOL {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                      &trans  &none   &none   &none   &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &none   &trans  &trans  &none   &none
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
