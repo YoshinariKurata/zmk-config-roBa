@@ -257,13 +257,13 @@
 &kp Q             &kp L         &kp U         &kp COMMA                    &lt_bt 6 DOT                                                   &kp F        &kp W  &kp R      &kp Y    &kp P
 &kp E             &kp I         &kp A         &kp O                   &kp MINUS    &kp TAB                   &kp SLASH      &kp K        &kp T  &kp N      &kp S    &kp H
 &kp Z             &kp X        &kp C         &kp V                   &hold_kp DOUBLE_QUOTES SQT  &kp COLON                     &kp SEMICOLON  &kp G        &kp D  &kp M      &kp J    &kp B
-&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mo 1                   &kp SPACE    &thumb_mac 3 0               &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
+&kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mo 1                   &kp SPACE    &thumb_mac 3 0               &kp BACKSPACE  &kp ENTER                               &kp DEL
             >;
 
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
         };
 
-        // 記号レイヤー。左親指・左のキーか Enter 長押しで入る。T の位置が !、N の位置が ? (ほかはこれから置く)
+        // 記号レイヤー。左親指・左のキーを押している間。T の位置が !、N の位置が ? (ほかはこれから置く)
         SYMBOL {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
