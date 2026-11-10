@@ -30,7 +30,7 @@
     combos {
         compatible = "zmk,combos";
 
-        // - + K で英数、- + T でかな
+        // / + K で英数、/ + T でかな
         eisu {
             bindings = <&kp LANG2>;
             key-positions = <16 17>;
@@ -55,7 +55,7 @@
             layers = <7 8 9 10 11>;
         };
 
-        // / + Tab で ⇧Tab
+        // - + Tab で ⇧Tab
         shift_tab {
             bindings = <&kp LS(TAB)>;
             key-positions = <14 15>;
@@ -255,7 +255,7 @@
         default_layer {
             bindings = <
 &kp Q             &kp L         &kp U         &kp COMMA                    &lt_bt 6 DOT                                                   &kp F        &kp W  &kp R      &kp Y    &kp P
-&kp E             &kp I         &kp A         &kp O                   &kp SLASH    &kp TAB                   &kp MINUS      &kp K        &kp T  &kp N      &kp S    &kp H
+&kp E             &kp I         &kp A         &kp O                   &kp MINUS    &kp TAB                   &kp SLASH      &kp K        &kp T  &kp N      &kp S    &kp H
 &kp Z             &kp X        &kp C         &kp V                   &hold_kp DOUBLE_QUOTES SQT  &kp COLON                     &kp SEMICOLON  &kp G        &kp D  &kp M      &kp J    &kp B
 &kp LCTRL         &kp LEFT_ALT  &kp LEFT_GUI  &mo 1                   &kp SPACE    &thumb_mac 3 0               &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
             >;
@@ -263,11 +263,11 @@
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
         };
 
-        // 記号を置く予定。左親指・左のキーか Enter 長押しで入る
+        // 記号レイヤー。左親指・左のキーか Enter 長押しで入る。T の位置が !、N の位置が ? (ほかはこれから置く)
         SYMBOL {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &kp EXCL  &kp QMARK  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
