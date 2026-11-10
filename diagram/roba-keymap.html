@@ -172,8 +172,8 @@ footer { color: var(--muted); font-size: 0.8rem; }
   <div class="modebar">
     <span class="modelabel">モード</span>
     <div class="tabs" id="modes">
-      <button type="button" data-mode="mac">Mac（接続先 1・2）</button>
-      <button type="button" data-mode="win">Windows・Android（接続先 3・4）</button>
+      <button type="button" data-mode="mac">Mac（接続先 1）</button>
+      <button type="button" data-mode="win">Windows・Android（接続先 2〜4）</button>
     </div>
   </div>
   <div class="tabs" role="tablist" id="tabs"></div>
@@ -228,7 +228,7 @@ footer { color: var(--muted); font-size: 0.8rem; }
         <li><code>'</code> のキーは長押しで <code>"</code>。</li>
         <li>ロータリーエンコーダ（左手側）は PgUp / PgDn。左親指・右のキーを押している間は ⌃PgUp / ⌃PgDn です。</li>
         <li>かな・英数は Mac の日本語入力（ローマ字入力）が入っていると動きます。キーボードの種類は ANSI にしてください。</li>
-        <li>モードは<b>接続先を切り替えるキー</b>で決まります。. を1秒押したまま F・W で Mac、R・Y で Windows・Android。電源を入れ直すと Mac モードに戻るので、接続先 3・4 のときはもう一度 R / Y を押してください。</li>
+        <li>モードは<b>接続先を切り替えるキー</b>で決まります。. を1秒押したまま F で Mac（MacBook）、W で Windows、R で Android（どちらも Windows・Android モード）、Y は接続先4（Windows・Android モード）。電源を入れ直すと Mac モードに戻るので、接続先 2〜4 のときはもう一度 W / R / Y を押してください。</li>
         <li>Windows・Android モードの英数/かなは無変換/変換を送ります。Windows では Microsoft IME の設定で「無変換＝IME オフ、変換＝IME オン」にしてください。</li>
       </ul>
     </section>
@@ -289,7 +289,7 @@ const LAYERS = [
     ...T(6), _,_,_
   ]},
   { name: '設定・BT', how: '<b>. を1秒押したまま</b>。Bluetooth の接続先（とモード）を切り替えたり、ペアリングを解除したりします。', trigger: 4, keys: [
-    ...T(5), k('BT 1',_,'MacBook・Mac'),k('BT 2',_,'iMac・Mac'),k('BT 3',_,'Android・Win'),k('BT 4',_,'Windows・Win'),k('BT 5',_,'接続先5'),
+    ...T(5), k('BT 1',_,'MacBook・Mac'),k('BT 2',_,'Windows・Win'),k('BT 3',_,'Android・Win'),k('BT 4',_,'接続先4・Win'),k('BT 5',_,'接続先5'),
     ...T(12),
     ...T(6), _,_,_,_,_,k('BT 解除',_,'今の接続先'),
     ...T(6), _,_,k('全 BT',_,'すべて解除')

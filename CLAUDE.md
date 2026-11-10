@@ -60,7 +60,15 @@ https://claude.ai/artifact/3K1rzHMtDKGa16DA9rCfje （同じアカウントの Cl
 
 ## 接続先と OS モード
 
-`.` を1秒押したまま右手で選ぶ。F=接続先1、W=2（どちらも Mac モード、`&to 0`）、R=3、Y=4（Windows・Android モード、`&to 7`）、P=5（モードは切り替えない）。電源を入れ直すと Mac モードに戻る。
+`.` を1秒押したまま右手で選ぶ。電源を入れ直すと Mac モードに戻る。
+
+| キー | 接続先 | 機器 | モード |
+|---|---|---|---|
+| F | 1 | MacBook | Mac（`&to 0`） |
+| W | 2 | Windows | Windows・Android（`&to 7`） |
+| R | 3 | Android | Windows・Android（`&to 7`） |
+| Y | 4 | 未確認 | Windows・Android（`&to 7`） |
+| P | 5 | 未使用 | 切り替えない |
 
 Windows・Android モードでは、Mac 用のキーを WIN 系レイヤーで上書きする（⌘ → Ctrl など、かな/英数は変換/無変換）。
 
