@@ -275,8 +275,8 @@
 
         NUM {
             bindings = <
-&kp ESC  &sl 5   &kp UP_ARROW   &none   &none                    &none   &kp N7  &kp N8  &kp N9  &kp BACKSPACE
-&kp LG(A)  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none   &trans   &none   &none   &kp N4  &kp N5  &kp N6  &kp ENTER
+&kp ESC  &sl 5   &kp UP_ARROW   &none   &none                    &kp MINUS  &kp N7  &kp N8  &kp N9  &none
+&kp LG(A)  &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &none   &trans   &kp LC(LA(LS(LG(Y))))  &kp COMMA  &kp N4  &kp N5  &kp N6  &none
 &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &none   &none    &trans  &kp N0  &kp N1  &kp N2  &kp N3  &none
 &trans   &trans  &trans  &trans  &trans  &trans   &trans  &trans                         &none
             >;
@@ -337,7 +337,7 @@
         WIN_NUM {
             bindings = <
 &trans     &trans     &trans     &trans     &trans                     &trans  &trans  &trans  &trans  &trans
-&kp LC(A)  &trans     &trans     &trans     &trans  &trans    &trans   &trans  &trans  &trans  &trans  &trans
+&kp LC(A)  &trans     &trans     &trans     &trans  &trans    &none    &trans  &trans  &trans  &trans  &trans
 &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &trans  &trans    &trans   &trans  &trans  &trans  &trans  &trans
 &trans     &trans     &trans     &trans     &trans  &trans    &trans   &trans                          &trans
             >;
