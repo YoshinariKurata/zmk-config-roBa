@@ -63,7 +63,10 @@ Windows には Hammerspoon がないので、`roba_win/keymap-overlay/overlay.ps
 | 6 | 設定・BT | 4（`.`）を1秒長押し |
 | 7 | WIN | Windows・Android モードの上書き |
 | 8〜12 | WIN_NUM / WIN_ARROW / WIN_MOUSE / WIN_SCROLL / WIN_SYMBOL | 7 と 2〜5、1 の条件付きレイヤー |
+| 13 | MOUSE_NAV | 3 と 4 の条件付き（マウスレイヤー中に 39 を長押し）。R の位置で戻る（⌘[）、P の位置で進む（⌘]）。ほかはマウスレイヤーのまま |
+| 14 | WIN_MOUSE_NAV | 7 と 3 と 4 の条件付き。Windows・Android モードの 13（Alt+← / Alt+→） |
 
+- レイヤーは ZMK の上限 32 まで作れ、容量にも余裕がある。OS で送るキーが違う機能は Mac 用と Windows 用の2つ組にする。上下の順を変えたいときは番号を振り直さず、条件付きレイヤーで上に乗せる。
 - レイヤー番号はコンボの `layers`、条件付きレイヤー、トラックボールの `automouse-layer` / `scroll-layers`、Mac の Hammerspoon（⌃⌥⇧⌘ + 0〜6）が参照しているので、振り直さない。使わなくなったレイヤーも空のまま残す。
 - 39 のタップ判定は持ち主の2回押しを実測して決めた（2回押しの間隔 450ms、長押しの境目 500ms）。
 

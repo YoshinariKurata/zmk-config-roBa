@@ -194,6 +194,17 @@
             if-layers = <7 1>;
             then-layer = <12>;
         };
+
+        // マウスレイヤー中に左親指・右のキーを長押し: R / P が戻る / 進む。レイヤー3 はマウス (4) より下で効かないので、両方有効なときだけ上に乗せる
+        mouse_nav {
+            if-layers = <3 4>;
+            then-layer = <13>;
+        };
+
+        win_mouse_nav {
+            if-layers = <7 3 4>;
+            then-layer = <14>;
+        };
     };
 
     behaviors {
@@ -406,6 +417,26 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &none   &trans  &trans  &none   &none
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
+            >;
+        };
+
+        // マウスレイヤー中に左親指・右のキーを長押ししている間 (3 と 4 の条件付き)。R (左クリックの位置) で戻る、P (右クリックの位置) で進む。ほかはマウスレイヤーのまま
+        MOUSE_NAV {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &kp LG(LBKT)  &trans  &kp LG(RBKT)
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                &trans
+            >;
+        };
+
+        // Windows/Android モード中の MOUSE_NAV (7 と 3 と 4 の条件付き)。Alt+← / Alt+→
+        WIN_MOUSE_NAV {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &kp LA(LEFT)  &trans  &kp LA(RIGHT)
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans        &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                &trans
             >;
         };
     };
