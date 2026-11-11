@@ -12,3 +12,4 @@
 
 1. **図に全画面表示のモード `#overlay=full` を入れた。** 全レイヤーを3列で並べ、背景を暗く少し透かす（Windows で overlay.ps1 が足していた CSS とほぼ同じ）。Mac では Hammerspoon が ⌃⌥⇧⌘D でこれを出す。Windows の Ctrl+Alt+F14 も、CSS を足す代わりに `#overlay=full&mode=win` を開くように変えれば、Mac と見た目をそろえられる（任意。持ち主に聞いてから）。
 2. **モニターのホットキーを Ctrl+Shift+J / K / L に変えた**（持ち主が両方の Screen InStyle に登録済み）。キーボードの設定・BT の K は Ctrl+Shift+J を送る。Windows で以前の Ctrl+Alt+8 / 9 / 0 が Screen InStyle に残っていたら、持ち主に聞いて消す。
+3. **Mac の Hammerspoon の設定をリポジトリの `mac/hammerspoon/` に置いた。** Mac のオーバーレイの大きさ・位置（`roba_keymap.lua` の `rightFrame` / `topFrame`、全画面は画面いっぱい）はここで読める。Windows で変えた場合は、反映を Mac 宛てに書く。

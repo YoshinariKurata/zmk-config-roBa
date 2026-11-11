@@ -32,7 +32,7 @@ https://claude.ai/artifact/3K1rzHMtDKGa16DA9rCfje （同じアカウントの Cl
 - キーマップを変えたら、このファイルの `LAYERS`（各レイヤー43キー）と、Windows モードで違うキーをまとめた `WIN`、注意書きも合わせて直し、上の URL を指定して公開し直してから、キーマップと一緒にコミットする。
 - 公開前に、上の URL の今の版を読んで、このファイルと違っていないか確かめる（もう一方のパソコンで先に公開されていることがある）。違っていたら、新しい方に合わせてから直す。
 - 図のキーをクリックすると「[Mac・L4 マウス] 右手・上から2段目・右から6番目（今: …）」という説明がコピーされる。持ち主はこれを貼り付けて変更を頼む。
-- Mac にはこの図のローカルコピー（`~/Documents/roba/keymap-overlay/keymap.html`、`diagram/roba-keymap.html` の先頭に doctype / charset / viewport の行を足したもの）があり、Hammerspoon が画面に重ねて表示する。Mac で作業するときは、図を直したらこのコピーも作り直して Hammerspoon を再起動する。Windows で直した場合は、次に Mac で pull したときに作り直す。
+- Mac にはこの図のローカルコピー（`~/Documents/roba/keymap-overlay/keymap.html`、`diagram/roba-keymap.html` の先頭に doctype / charset / viewport の行を足したもの）があり、Hammerspoon が画面に重ねて表示する。Mac で図を直したとき、または pull で図や `mac/hammerspoon` が変わったときは、`sh mac/refresh-overlay.sh` でコピーを作り直して Hammerspoon を再起動する。
 
 ## Windows のキーマップ図
 
@@ -101,7 +101,7 @@ DDC/CI では応答しないので、EIZO の **Screen InStyle**（両方の PC 
 
 ## ⌃⌥⇧⌘（Hyper）キー
 
-Mac では Hammerspoon（Mac 専用、`~/Documents/roba/keymap-overlay/*.lua`）が受け取る。
+Mac では Hammerspoon が受け取る。設定はこのリポジトリの `mac/hammerspoon/`（`init.lua` が各 lua を読む）で、Mac の `~/.hammerspoon/init.lua` はここを dofile しているだけ。Windows からも読めるので、Mac の表示の大きさや位置はここで確かめる。変えたら Mac で `sh mac/refresh-overlay.sh`（Hammerspoon の再起動を兼ねる）。lua が書き出す確認用のファイル（`*-check.txt` など）は `~/Documents/roba/keymap-overlay/` に出る。
 
 | キー | 動き | 置き場所 |
 |---|---|---|
