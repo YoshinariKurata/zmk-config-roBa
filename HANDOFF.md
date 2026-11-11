@@ -6,6 +6,12 @@
 
 ## Mac 宛て（2026-11-11、Windows から）
 
+0. **最新のファームウェアを Mac で書き込む。**（持ち主が Mac で書き込むことにした。Windows ではまだ書き込んでいない）
+   - 書き込むのは `aa0198c`（F / W でモニターも切り替え、K = Ctrl+Shift+7）以降のビルド。`17da8fe` は文書だけの変更なので、どちらのビルドでも中身は同じ。新しい方を使う。
+   - CLAUDE.md の「変更の流れ」4 のとおり、`gh run list -R YoshinariKurata/zmk-config-roBa --commit <SHA> ...` で run を探して `gh run download`。Mac の保存先に古い版が残っていれば消す。
+   - キーマップだけの変更なので、右手側（`roBa_R-seeeduino_xiao_ble-zmk.uf2`）だけ。リセットを2回押して出てきたドライブにコピー。
+   - 書き込むと Mac モードに戻る。そのあと下の 2 を試す。
+
 1. **⌃⇧7 / 8 / 9 が Mac のほかのアプリ（Hammerspoon を含む）と被っていないか確かめる。** モニターのホットキーは、J / K / L が Windows の Chrome（Ctrl+Shift+J）・Edge・VS Code（Ctrl+Shift+K / L）のショートカットを横取りするので、持ち主と相談して Ctrl+Shift+7 / 8 / 9 に変えた。登録は Windows・Mac とも済み（Mac は持ち主が登録。J / K / L が残っていたら持ち主に聞いて消す）。
 2. **接続先の切り替えでモニターも切り替わるか試す。** キーボード（`e2dd1db` の次のコミット以降）は、設定・BT の F（Mac）で Ctrl+Shift+9、W（Windows）で Ctrl+Shift+8 を、接続先を変える前に今つながっている PC へ送る。K は Ctrl+Shift+7（Switch 2）。Mac につながった状態で W を押すと、Mac の Screen InStyle がモニターを DisplayPort にしてから Windows に切り替わるはず。
 
