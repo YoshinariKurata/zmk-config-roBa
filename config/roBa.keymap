@@ -351,10 +351,12 @@
             >;
         };
 
+        // 設定・BT。K の位置で、モニター (EIZO EV3450XC) の入力を HDMI 1 (Switch 2) に切り替える:
+        // 今つながっている PC の Screen InStyle が Ctrl+Alt+0 を受け取る (8 = DisplayPort・Windows、9 = USB-C・Mac、0 = HDMI 1)
         layer_6 {
             bindings = <
 &trans  &trans        &trans        &trans        &trans                           &bt_mac0      &bt_win1      &bt_win2      &bt_win3      &bt BT_SEL 4
-&trans  &trans        &trans        &trans        &trans  &trans      &trans       &trans        &trans        &trans        &trans        &trans
+&trans  &trans        &trans        &trans        &trans  &trans      &trans       &kp LC(LA(N0)) &trans       &trans        &trans        &trans
 &trans  &trans        &trans        &trans        &trans  &trans      &trans       &trans        &trans        &trans        &trans        &bt BT_CLR
 &trans  &trans        &trans        &trans        &trans  &trans      &trans       &trans                                                  &bt BT_CLR_ALL
             >;

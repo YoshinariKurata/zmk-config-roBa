@@ -29,6 +29,12 @@
 3. **（持ち主に聞いてから）Hammerspoon の設定をリポジトリにも置くか相談する。**
    Windows 側は、Mac のオーバーレイの大きさ・位置がわからず、見た目を合わせるのに苦労した。`keymap-overlay` の lua をリポジトリ（例: `mac/keymap-overlay/`）に置いてよいか、持ち主に聞く。置く場合は、置き場所と同期のしかたを CLAUDE.md に書く。
 
+4. **Mac の Screen InStyle にモニター切り替えのホットキーを登録する。**（CLAUDE.md の「モニターの入力切り替え」）
+   持ち主が自分で入れている途中かもしれないので、まず状態を聞く。Windows と同じ3つ（Ctrl+Alt+8 = DisplayPort、Ctrl+Alt+9 = USB-C、Ctrl+Alt+0 = HDMI 1、モニターは EV3450XC）を登録する。
+   - **Mac 版の「Ctrl」が ⌃（Control）か ⌘（Command）かを確かめる。** キーボードは ⌃⌥8 / 9 / 0 を送る（`&kp LC(LA(N0))` など）。⌘ のことなら、Windows 宛てに「Mac モードでは ⌘⌥ を送るように変える」と書く。
+   - ⌃⌥8 / 9 / 0 が Mac のほかのアプリ（Hammerspoon を含む）と被っていないか確かめる。
+   - 試し方: Mac につながった状態で、設定・BT レイヤー（`.` を1秒）の K で Switch 2 に切り替わり、Mac で ⌃⌥9 を押すと USB-C に戻るか。
+
 ## Windows 宛て
 
 （なし）

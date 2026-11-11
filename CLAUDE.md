@@ -84,6 +84,21 @@ Windows には Hammerspoon がないので、`roba_win/keymap-overlay/overlay.ps
 
 Windows・Android モードでは、Mac 用のキーを WIN 系レイヤーで上書きする（⌘ → Ctrl など、かな/英数は変換/無変換）。
 
+## モニターの入力切り替え
+
+モニターは EIZO FlexScan EV3450XC。Windows = DisplayPort、Mac = USB-C、Nintendo Switch 2 = HDMI 1。互換性モードはオン。
+DDC/CI では応答しないので、EIZO の **Screen InStyle**（両方の PC に入れる）のホットキーで切り替える。選べるホットキーは Ctrl / Ctrl+Shift / Ctrl+Alt と英数字の組み合わせだけ。
+
+| ホットキー | 入力 |
+|---|---|
+| Ctrl+Alt+8 | DisplayPort（Windows） |
+| Ctrl+Alt+9 | USB-C（Mac） |
+| Ctrl+Alt+0 | HDMI 1（Switch 2） |
+
+- キーボードはホットキーを**今つながっている PC** に送り、その PC の Screen InStyle がモニターを切り替える。どちらの PC で受けても同じ入力になるよう、両方に同じ3つを登録する。今つながっている PC がロック中・スリープ中だと切り替わらない。
+- 設定・BT レイヤーの K の位置（17）が Ctrl+Alt+0（Switch 2 へ）。
+- Windows は 2026-11-11 に登録済み（Screen InStyle の設定はファイルでなく画面から。UI Automation で操作できた）。
+
 ## ⌃⌥⇧⌘（Hyper）キー
 
 Mac では Hammerspoon（Mac 専用、`~/Documents/roba/keymap-overlay/*.lua`）が受け取る。
