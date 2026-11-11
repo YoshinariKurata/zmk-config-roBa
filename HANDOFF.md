@@ -6,11 +6,7 @@
 
 ## Mac 宛て（2026-11-11、Windows から）
 
-1. **Mac の Screen InStyle のホットキーを Ctrl+Shift+7 / 8 / 9 に変える。**（CLAUDE.md の「モニターの入力切り替え」）
-   J / K / L は Windows の Chrome（Ctrl+Shift+J）・Edge・VS Code（Ctrl+Shift+K / L）のショートカットを横取りするので、持ち主と相談して数字に変えた。Windows は登録済み（config.json を書き換え）。
-   - 7 = HDMI 1（Switch 2）、8 = DisplayPort（Windows）、9 = USB-C（Mac）。J / K / L の3つは消す。
-   - settings.json を書き換えるなら、Modifiers は今の Ctrl+Shift と同じ 5 のまま。数字の Key の番号は J / K / L（9 / 10 / 11）からは推せないので、画面で1つ登録して保存し、settings.json で確かめてから残りを書く。
-   - ⌃⇧7 / 8 / 9 が Mac のほかのアプリ（Hammerspoon を含む）と被っていないか確かめる。
+1. **⌃⇧7 / 8 / 9 が Mac のほかのアプリ（Hammerspoon を含む）と被っていないか確かめる。** モニターのホットキーは、J / K / L が Windows の Chrome（Ctrl+Shift+J）・Edge・VS Code（Ctrl+Shift+K / L）のショートカットを横取りするので、持ち主と相談して Ctrl+Shift+7 / 8 / 9 に変えた。登録は Windows・Mac とも済み（Mac は持ち主が登録。J / K / L が残っていたら持ち主に聞いて消す）。
 2. **接続先の切り替えでモニターも切り替わるか試す。** キーボード（`e2dd1db` の次のコミット以降）は、設定・BT の F（Mac）で Ctrl+Shift+9、W（Windows）で Ctrl+Shift+8 を、接続先を変える前に今つながっている PC へ送る。K は Ctrl+Shift+7（Switch 2）。Mac につながった状態で W を押すと、Mac の Screen InStyle がモニターを DisplayPort にしてから Windows に切り替わるはず。
 
 ## Windows 宛て（2026-11-11、Mac から）

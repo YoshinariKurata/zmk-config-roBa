@@ -95,7 +95,7 @@ DDC/CI では応答しないので、EIZO の **Screen InStyle**（両方の PC 
 | Ctrl+Shift+8 | DisplayPort（Windows） |
 | Ctrl+Shift+9 | USB-C（Mac） |
 
-- キーボードはホットキーを**今つながっている PC** に送り、その PC の Screen InStyle がモニターを切り替える（映していない PC からでも切り替わることを確かめた）。どちらの PC で受けても同じ入力になるよう、両方に同じ3つを登録する。今つながっている PC がロック中・スリープ中だと切り替わらない。
+- キーボードはホットキーを**今つながっている PC** に送り、その PC の Screen InStyle がモニターを切り替える（映していない PC からでも切り替わることを確かめた）。どちらの PC で受けても同じ入力になるよう、両方に同じ3つを登録してある（2026-11-11）。今つながっている PC がロック中・スリープ中だと切り替わらない。
 - Mac の Screen InStyle では Alt（⌥）をホットキーに組み込めなかったので、両方とも Ctrl+Shift にそろえた（以前の Windows は Ctrl+Alt+8 / 9 / 0）。Mac の「Ctrl」は ⌃ Control として送っている。
 - 設定・BT レイヤーの K の位置（17）が Ctrl+Shift+7（Switch 2 へ）。F（接続先1・Mac）は Ctrl+Shift+9、W（接続先2・Windows）は Ctrl+Shift+8 を、接続先を切り替える前に今つながっている PC へ送る（マクロ `bt_mac0` / `bt_win1`）。
 - 数字にしたのは、J / K / L だと Windows の Chrome（Ctrl+Shift+J）・Edge・VS Code（Ctrl+Shift+K / L）のショートカットを横取りするため。Ctrl+Shift+0 は IME の切り替えに使われることがあるので避けた。
