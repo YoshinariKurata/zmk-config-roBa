@@ -104,9 +104,9 @@
             layers = <6>;
         };
 
-        // Windows/Android モードでは ⌃⌥⇧⌘ が Office を開くので、Ctrl+Alt+K を送る (Windows のデスクトップのショートカットが図を開く)
+        // Windows/Android モードでは ⌃⌥⇧⌘ が Office を開くので、Ctrl+Alt+F13 を送る (Windows の overlay.ps1 が図を重ねて表示)
         keymap_win {
-            bindings = <&kp LC(LA(K))>;
+            bindings = <&kp LC(LA(F13))>;
             key-positions = <26 27>;
             layers = <7 8 9 10 11 12>;
         };

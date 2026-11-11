@@ -29,6 +29,10 @@ https://claude.ai/artifact/3K1rzHMtDKGa16DA9rCfje （同じアカウントの Cl
 - 図のキーをクリックすると「[Mac・L4 マウス] 右手・上から2段目・右から6番目（今: …）」という説明がコピーされる。持ち主はこれを貼り付けて変更を頼む。
 - Mac にはこの図のローカルコピー（`~/Documents/roba/keymap-overlay/keymap.html`、`diagram/roba-keymap.html` の先頭に doctype / charset / viewport の行を足したもの）があり、Hammerspoon が画面に重ねて表示する。Mac で作業するときは、図を直したらこのコピーも作り直して Hammerspoon を再起動する。Windows で直した場合は、次に Mac で pull したときに作り直す。
 
+## Windows のキーマップ図
+
+Windows には Hammerspoon がないので、`~/Documents/roba-keymap/overlay.ps1`（Windows 専用、リポジトリの外）が代わりをする。Ctrl+Alt+F13 で図を画面の上端に重ね、もう一度押すと消す（`#overlay=top&mode=win`、クリックは素通し）。専用プロファイルの Edge（アプリモード）を枠なし・最前面・半透明にして出し入れする。図のファイルが更新されていたら、次に出すときに読み直すので、Windows で pull したあとに作り直す必要はない。Ctrl+Alt+K はこの PC で別のものが使っていて登録できなかった。
+
 ## キーの位置番号
 
 0〜42。左右それぞれ上段5キー、中段・下段は6キー（内側に1キー多い）、親指は左3・右2。
@@ -91,7 +95,7 @@ Mac では Hammerspoon（Mac 専用、`~/Documents/roba/keymap-overlay/*.lua`）
 
 - `/` + K で英数、`/` + T でかな（Windows では無変換 / 変換）
 - `-` + Tab で ⇧Tab
-- `'` + `:` でキーマップ図（Mac は ⌃⌥⇧⌘ + レイヤー番号。Windows モード（レイヤー7〜12）では Ctrl+Alt+K を送り、Windows のデスクトップの「roBa キーマップ」ショートカット（ホットキー Ctrl+Alt+K、`~/Documents/roba-keymap/open.ps1` を実行）が図を Edge で開く）
+- `'` + `:` でキーマップ図（Mac は ⌃⌥⇧⌘ + レイヤー番号。Windows モード（レイヤー7〜12）では Ctrl+Alt+F13 を送る。下の「Windows のキーマップ図」）
 - F キーへの切り替え後、1 + 2 で F12
 
 持ち主は同時押しを最小限にしたい方針。誤爆しそうな組み合わせ（ローマ字で続けて打つキー同士）は提案前に指摘する。

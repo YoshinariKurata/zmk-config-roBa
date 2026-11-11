@@ -208,7 +208,7 @@ footer { color: var(--muted); font-size: 0.8rem; }
         <li><kbd>/</kbd><kbd>K</kbd><span class="arrow">→</span><span class="res">英数</span></li>
         <li><kbd>/</kbd><kbd>T</kbd><span class="arrow">→</span><span class="res">かな</span></li>
         <li><kbd>-</kbd><kbd>Tab</kbd><span class="arrow">→</span><span class="res">Shift + Tab</span></li>
-        <li><kbd>'</kbd><kbd>:</kbd><span class="arrow">→</span><span class="res">今のレイヤーのキーマップ図を表示（Mac・Hammerspoon）。Windows モードでは Ctrl+Alt+K を送り、Windows のデスクトップのショートカットが図を開きます</span></li>
+        <li><kbd>'</kbd><kbd>:</kbd><span class="arrow">→</span><span class="res">今のレイヤーのキーマップ図を表示（Mac・Hammerspoon）。Windows モードでは Ctrl+Alt+F13 を送り、Windows 側のスクリプトが図を画面の上端に重ねます（もう一度押すと消えます）</span></li>
       </ul>
     </section>
     <section>
@@ -503,7 +503,7 @@ try { if (localStorage.getItem('roba-mode') === 'win') mode = 'win'; } catch (e)
 modeBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === mode));
 let start = 0;
 try { const s = parseInt(localStorage.getItem('roba-layer'), 10); if (s >= 0 && s < LAYERS.length) start = s; } catch (e) {}
-// #overlay — every layer as a card, used by the Hammerspoon overlay. A layer with no keys of its own is left out.
+// #overlay — every layer as a card, used by the Hammerspoon overlay (and the Windows overlay with &mode=win). A layer with no keys of its own is left out.
 // #overlay=top — only スクロール・F キー, 基本 and 数字, with 基本 in the middle.
 function renderStack(top) {
   const stack = document.getElementById('stack');
@@ -531,7 +531,8 @@ function applyHash() {
     const top = h.get('overlay') === 'top';
     document.documentElement.classList.add('overlay');
     document.documentElement.classList.toggle('top', top);
-    if (mode !== 'mac') { mode = 'mac'; modeBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === mode)); }
+    const om = h.get('mode') === 'win' ? 'win' : 'mac';  // &mode=win: the Windows overlay
+    if (mode !== om) { mode = om; modeBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === mode)); }
     renderStack(top);
     if (document.fonts) document.fonts.ready.then(() => renderStack(top));
     return true;
