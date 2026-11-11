@@ -67,7 +67,7 @@ https://claude.ai/artifact/3K1rzHMtDKGa16DA9rCfje （同じアカウントの Cl
 | F | 1 | MacBook | Mac（`&to 0`） |
 | W | 2 | Windows | Windows・Android（`&to 7`） |
 | R | 3 | Android | Windows・Android（`&to 7`） |
-| Y | 4 | 未確認 | Windows・Android（`&to 7`） |
+| Y | 4 | 未使用 | Windows・Android（`&to 7`） |
 | P | 5 | 未使用 | 切り替えない |
 
 Windows・Android モードでは、Mac 用のキーを WIN 系レイヤーで上書きする（⌘ → Ctrl など、かな/英数は変換/無変換）。
