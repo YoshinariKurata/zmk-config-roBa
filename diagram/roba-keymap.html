@@ -58,6 +58,12 @@ html.overlay.top .panel { right: auto; width: calc((100% - 12px) / 3); box-sizin
   position: relative; padding: 6px; border-radius: 14px; pointer-events: none;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
 }
+/* How to get into the layer, in the empty column between the two hands. Only on the full overlay (#overlay); the top strip stays compact */
+.enter { display: none; }
+html.overlay:not(.top) .enter {
+  display: block; position: absolute; left: 44.8%; width: 9.8%; top: 11%; margin: 0; text-align: center;
+  font: 700 1.5cqw/1.35 var(--font-body); color: var(--accent); line-break: strict;
+}
 .minilabel {
   position: absolute; top: 5px; left: 50%; transform: translateX(-50%); margin: 0; white-space: nowrap;
   font: 700 10px/1.3 var(--font-body); color: var(--ink);
@@ -255,44 +261,44 @@ const T = n => Array(n).fill(_);
 const N = { none: true, t: 'なし' };
 
 const LAYERS = [
-  { name: '基本', how: 'ふだんの入力。親指キーはタップと長押しで役割が変わります。', trigger: null, keys: [
+  { name: '基本', enter: 'ふだんの入力。どのレイヤーからも 切替 を1回で戻る', how: 'ふだんの入力。親指キーはタップと長押しで役割が変わります。', trigger: null, keys: [
     'Q','L','U',',',k('.','設定・BT','短く押すと .、1秒長押しで設定・BT'), 'F','W','R','Y','P',
     'E','I','A','O','-',k('Tab'), '/','K','T','N','S','H',
     'Z','X','C','V',k("'",'"','短く押すと \'、長押しで "'),':', ';','G','D','M','J','B',
     k('⌃','','Control'),k('⌥','','Option'),k('⌘','','Command'),k('記号',_,'押している間 記号レイヤー'),k('Space'),k('切替','Shift','1回で基本へ戻る、2回で数字レイヤー、長押しの間は Z の位置が Shift'),
     k('⌫',_,'Backspace'),k('Enter'),k('Del','','前方削除')
   ]},
-  { name: '記号', how: '<b>左親指・左のキーを押したまま</b>。T で !、N で ?。括弧はペアで入力されて、カーソルが中に入ります（Mac・Hammerspoon）。ほかの記号はこれから置きます。', trigger: 37, keys: [
+  { name: '記号', enter: '記号 を押したまま', how: '<b>左親指・左のキーを押したまま</b>。T で !、N で ?。括弧はペアで入力されて、カーソルが中に入ります（Mac・Hammerspoon）。ほかの記号はこれから置きます。', trigger: 37, keys: [
     ...T(5), _,k('『』',_,'ペアで入力、カーソルは中'),k('［］',_,'ペアで入力、カーソルは中'),k('【】',_,'ペアで入力、カーソルは中'),_,
     ...T(6), _,k('「」',_,'ペアで入力、カーソルは中'),'!','?',k('（）',_,'ペアで入力、カーソルは中'),k('…',_,'三点リーダー'),
     ...T(12),
     ...T(9)
   ]},
-  { name: '数字', how: '<b>左親指・右のキーを2回押す</b>と入り、1回押すと基本に戻ります。右手がテンキー（N が 5、G が 0）、左手は U I A O が矢印、ほかにすべて選択・取り消し・カット・コピー・ペースト。L の位置を押すと次の1キーが F キーになります。数字の左に - 、, 、¥（日本語入力中は「円」）。基本と同じ位置の Tab も使えます。「なし」は何も入力されません。', trigger: null, keys: [
+  { name: '数字', enter: '切替 を2回。1回で基本へ戻る', how: '<b>左親指・右のキーを2回押す</b>と入り、1回押すと基本に戻ります。右手がテンキー（N が 5、G が 0）、左手は U I A O が矢印、ほかにすべて選択・取り消し・カット・コピー・ペースト。L の位置を押すと次の1キーが F キーになります。数字の左に - 、, 、¥（日本語入力中は「円」）。基本と同じ位置の Tab も使えます。「なし」は何も入力されません。', trigger: null, keys: [
     'Esc',k('F キー',_,'次の1キーを F キーにする（約1秒で解除）'),'↑',N,N, '-','7','8','9',N,
     k('⌘A',_,'すべて選択'),'←','↓','→',N,k('Tab'), k('¥',_,'日本語入力中は「円」（Mac・Hammerspoon）'),',','4','5','6',N,
     k('⌘Z',_,'取り消す'),k('⌘X',_,'カット'),k('⌘C',_,'コピー'),k('⌘V',_,'ペースト'),N,N, _,'0','1','2','3',N,
     ...T(6), k('⌫',_,'Backspace（基本と同じ）'),k('Enter',_,'基本と同じ'),N
   ]},
-  { name: 'Shift（仮）', how: '<b>左親指・右のキーを押したまま</b>。Z の位置が Shift です。置き場所が決まるまでの仮置きです。', trigger: 39, keys: [
+  { name: 'Shift（仮）', enter: '切替 を押したまま', how: '<b>左親指・右のキーを押したまま</b>。Z の位置が Shift です。置き場所が決まるまでの仮置きです。', trigger: 39, keys: [
     ...T(5), ...T(5),
     ...T(12),
     k('⇧',_,'Shift'),...T(5), ...T(6),
     ...T(6), ...T(3)
   ]},
-  { name: 'マウス', how: '<b>トラックボールを動かすと自動で入ります</b>。左親指・右のキーを1回押すと基本に戻ります（押さなければ 10 分間このまま）。「なし」のキーは何も入力されません。', trigger: 'ball', keys: [
+  { name: 'マウス', enter: 'トラックボールを動かす。切替 を1回で基本へ戻る', how: '<b>トラックボールを動かすと自動で入ります</b>。左親指・右のキーを1回押すと基本に戻ります（押さなければ 10 分間このまま）。「なし」のキーは何も入力されません。', trigger: 'ball', keys: [
     k('閉じる','全部閉じる','タップ ⌘W・長押し ⌥⌘W'),k('最小化','フルスクリーン','タップ ⌘M・長押し ⌃⌘F'),k('Mission Control',_,'⌃↑・開いているウィンドウを一覧'),k('通知を消す',_,'右上に出ている通知を閉じる（Mac・Hammerspoon）'),N, k('Finder',_,'Finder を前に出す。ウィンドウがなければホームを開く（Mac・Hammerspoon）'),N,k('左クリック'),k('中クリック','スクロール'),k('右クリック'),
     k('⌘A',_,'すべて選択'),k('⌃←',_,'左のデスクトップ'),k('アプリのウィンドウ',_,'⌃↓・今のアプリのウィンドウだけ一覧'),k('⌃→',_,'右のデスクトップ'),N,k('スクショ',_,'⇧⌘3・画面全体をデスクトップに保存'), N,N,N,k('前のタブ',_,'⌃⇧Tab'),N,k('次のタブ',_,'⌃Tab'),
     N,k('⌘X',_,'カット'),k('⌘C',_,'コピー'),k('⌘V',_,'ペースト'),N,N, N,N,N,N,N,N,
     N,N,N,N,N,k('戻る',_,'1回で基本へ戻る'), N,N,N
   ]},
-  { name: 'スクロール・F キー', how: '<b>マウスレイヤーの Y を押したまま</b>トラックボールを転がすとスクロールします。<b>数字レイヤーの L の位置</b>を押すと、次の1キーが F キーになります（0 の位置で F10、1 の2回押しで F11、1 と 2 の同時押しで F12）。', trigger: 8, ball: 'スクロール', keys: [
+  { name: 'スクロール・F キー', enter: 'マウスの Y を押したまま転がす。数字の L の位置の次の1キーは F キー', how: '<b>マウスレイヤーの Y を押したまま</b>トラックボールを転がすとスクロールします。<b>数字レイヤーの L の位置</b>を押すと、次の1キーが F キーになります（0 の位置で F10、1 の2回押しで F11、1 と 2 の同時押しで F12）。', trigger: 8, ball: 'スクロール', keys: [
     ...T(5), _,'F7','F8','F9',_,
     ...T(6), _,_,'F4','F5','F6',_,
     ...T(6), _,'F10',k('F1','2回 F11','2回押しで F11'),k('F2','1と F12','1 と同時押しで F12'),'F3',_,
     ...T(6), _,_,_
   ]},
-  { name: '設定・BT', how: '<b>. を1秒押したまま</b>。Bluetooth の接続先（とモード）を切り替えたり、ペアリングを解除したりします。', trigger: 4, keys: [
+  { name: '設定・BT', enter: '. を1秒押したまま', how: '<b>. を1秒押したまま</b>。Bluetooth の接続先（とモード）を切り替えたり、ペアリングを解除したりします。', trigger: 4, keys: [
     ...T(5), k('BT 1',_,'MacBook・Mac'),k('BT 2',_,'Windows・Win'),k('BT 3',_,'Android・Win'),k('BT 4',_,'未使用・Win'),k('BT 5',_,'接続先5'),
     ...T(12),
     ...T(6), _,_,_,_,_,k('BT 解除',_,'今の接続先'),
@@ -524,6 +530,12 @@ function renderStack(top) {
     label.textContent = L.name;
     const copy = board.cloneNode(true);
     copy.removeAttribute('id');
+    if (L.enter) {
+      const enter = document.createElement('p');
+      enter.className = 'enter';
+      enter.textContent = L.enter;
+      copy.appendChild(enter);
+    }
     card.append(label, copy);
     stack.appendChild(card);
   });

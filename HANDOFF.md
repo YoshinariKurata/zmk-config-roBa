@@ -12,6 +12,7 @@
    図（`diagram/roba-keymap.html`）に、Windows で次の2つを入れた。
    - オーバーレイ（`#overlay`）で、人差し指のホームポジション（位置13 の O と 18 の T）に、オレンジの枠と下の横棒の目印を付けた。全カードの同じ位置に出る。
    - `#overlay` に `&mode=win` を付けると Windows・Android モードで描く（Windows 用）。付けなければ今までどおり Mac モード。
+   - 全レイヤーの表示（`#overlay`、`=top` なし）では、各カードの左手と右手の間に「このレイヤーへの入り方」（`LAYERS` の `enter`）をオレンジの太字で出す。上端3枚の表示（`#overlay=top`）には出さない。
 
 2. **Hammerspoon で ⌃⌥⇧⌘D を受け取り、全レイヤーの詳しい図を画面いっぱいに出す。**（`~/Documents/roba/keymap-overlay/*.lua`）
    - キーボードは `V` + `:` の同時押し（位置25 と 27、コンボ `keymap_full`、レイヤー0〜6）で ⌃⌥⇧⌘D を送る。
