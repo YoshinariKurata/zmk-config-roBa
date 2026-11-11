@@ -87,17 +87,17 @@ Windows・Android モードでは、Mac 用のキーを WIN 系レイヤーで�
 ## モニターの入力切り替え
 
 モニターは EIZO FlexScan EV3450XC。Windows = DisplayPort、Mac = USB-C、Nintendo Switch 2 = HDMI 1。互換性モードはオン。
-DDC/CI では応答しないので、EIZO の **Screen InStyle**（両方の PC に入れる）のホットキーで切り替える。選べるホットキーは Ctrl / Ctrl+Shift / Ctrl+Alt と英数字の組み合わせだけ。
+DDC/CI では応答しないので、EIZO の **Screen InStyle**（両方の PC に入れる）のホットキーで切り替える。
 
 | ホットキー | 入力 |
 |---|---|
-| Ctrl+Alt+8 | DisplayPort（Windows） |
-| Ctrl+Alt+9 | USB-C（Mac） |
-| Ctrl+Alt+0 | HDMI 1（Switch 2） |
+| Ctrl+Shift+J | HDMI 1（Switch 2） |
+| Ctrl+Shift+K | DisplayPort（Windows） |
+| Ctrl+Shift+L | USB-C（Mac） |
 
-- キーボードはホットキーを**今つながっている PC** に送り、その PC の Screen InStyle がモニターを切り替える。どちらの PC で受けても同じ入力になるよう、両方に同じ3つを登録する。今つながっている PC がロック中・スリープ中だと切り替わらない。
-- 設定・BT レイヤーの K の位置（17）が Ctrl+Alt+0（Switch 2 へ）。
-- Windows は 2026-11-11 に登録済み（Screen InStyle の設定はファイルでなく画面から。UI Automation で操作できた）。
+- キーボードはホットキーを**今つながっている PC** に送り、その PC の Screen InStyle がモニターを切り替える。どちらの PC で受けても同じ入力になるよう、両方に同じ3つを登録してある（2026-11-11、持ち主が登録）。今つながっている PC がロック中・スリープ中だと切り替わらない。
+- Mac の Screen InStyle では Alt（⌥）をホットキーに組み込めなかったので、両方とも Ctrl+Shift にそろえた（以前の Windows は Ctrl+Alt+8 / 9 / 0）。Mac の「Ctrl」は ⌃ Control として送っている。
+- 設定・BT レイヤーの K の位置（17）が Ctrl+Shift+J（Switch 2 へ）。
 
 ## ⌃⌥⇧⌘（Hyper）キー
 
@@ -106,7 +106,7 @@ Mac では Hammerspoon（Mac 専用、`~/Documents/roba/keymap-overlay/*.lua`）
 | キー | 動き | 置き場所 |
 |---|---|---|
 | 0〜6 | キーマップ図の表示を切り替え | `'` + `:` の同時押し |
-| D | 全レイヤーの詳しいキーマップ図を画面いっぱいに表示（0〜6 の図とは切り替えで、重ねない）。**Mac の Hammerspoon 側はまだ未対応**（2026-11-11 に Windows で追加） | `V` + `:` の同時押し |
+| D | 全レイヤーの詳しいキーマップ図を画面いっぱいに表示（`#overlay=full`、3列。0〜6 の図とは切り替えで、重ねない） | `V` + `:` の同時押し |
 | N | 通知を消す | マウス `,` の位置 |
 | F | Finder を前に出す | マウス F の位置 |
 | Y | ¥（日本語入力中は「円」） | 数字 |

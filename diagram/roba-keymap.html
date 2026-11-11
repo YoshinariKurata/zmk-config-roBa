@@ -54,6 +54,12 @@ html.overlay .stack { display: flex; flex-direction: column; gap: 6px; }
 html.overlay.top .stack { flex-direction: row; }
 html.overlay.top .card { flex: 1 1 0; min-width: 0; }
 html.overlay.top .panel { right: auto; width: calc((100% - 12px) / 3); box-sizing: border-box; }
+/* #overlay=full: every layer, three columns filling the screen (Mac: Hammerspoon's ⌃⌥⇧⌘D) */
+html.overlay.full, html.overlay.full body { background: rgba(8, 9, 11, .92); }
+html.overlay.full .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 24px; box-sizing: border-box; min-height: 100vh; align-content: center; }
+html.overlay.full .card { background: #1b1e25; }
+html.overlay.full .panel { right: auto; width: calc((100% - 96px) / 3); box-sizing: border-box; }
+html.overlay.full .minilabel { font-size: 15px; top: 8px; }
 .card {
   position: relative; padding: 6px; border-radius: 14px; pointer-events: none;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
@@ -300,7 +306,7 @@ const LAYERS = [
   ]},
   { name: '設定・BT', enter: '. を1秒押したまま', how: '<b>. を1秒押したまま</b>。Bluetooth の接続先（とモード）を切り替えたり、ペアリングを解除したりします。K の位置でモニターを Switch 2（HDMI 1）に切り替えます。', trigger: 4, keys: [
     ...T(5), k('BT 1',_,'MacBook・Mac'),k('BT 2',_,'Windows・Win'),k('BT 3',_,'Android・Win'),k('BT 4',_,'未使用・Win'),k('BT 5',_,'接続先5'),
-    ...T(6), _,k('Switch 2',_,'モニターを HDMI 1（Switch 2）に。今つながっている PC の Screen InStyle が Ctrl+Alt+0 を受け取る'),...T(4),
+    ...T(6), _,k('Switch 2',_,'モニターを HDMI 1（Switch 2）に。今つながっている PC の Screen InStyle が Ctrl+Shift+J を受け取る'),...T(4),
     ...T(6), _,_,_,_,_,k('BT 解除',_,'今の接続先'),
     ...T(6), _,_,k('全 BT',_,'すべて解除')
   ]},
@@ -554,13 +560,14 @@ function applyHash() {
     const top = h.get('overlay') === 'top';
     document.documentElement.classList.add('overlay');
     document.documentElement.classList.toggle('top', top);
+    document.documentElement.classList.toggle('full', h.get('overlay') === 'full');
     const om = h.get('mode') === 'win' ? 'win' : 'mac';  // &mode=win: the Windows overlay
     if (mode !== om) { mode = om; modeBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === mode)); }
     renderStack(top);
     if (document.fonts) document.fonts.ready.then(() => renderStack(top));
     return true;
   }
-  document.documentElement.classList.remove('overlay', 'top');
+  document.documentElement.classList.remove('overlay', 'top', 'full');
   if (!h.has('layer')) return false;
   const n = parseInt(h.get('layer'), 10);
   const li = LAYERS.findIndex((L, i) => (L.n ?? i) === n);
