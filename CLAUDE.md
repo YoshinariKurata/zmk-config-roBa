@@ -31,7 +31,7 @@ https://claude.ai/artifact/3K1rzHMtDKGa16DA9rCfje （同じアカウントの Cl
 
 ## Windows のキーマップ図
 
-Windows には Hammerspoon がないので、`roba_win/keymap-overlay/overlay.ps1`（Windows 専用、リポジトリの隣。ビルドしたファームウェアは `roba_win/firmware/<run ID>`）が代わりをする。Ctrl+Alt+F13 で図を画面の上端に重ね、もう一度押すと消す（`#overlay=top&mode=win`、クリックは素通し）。Edge は最前面の指定を自分で外すので、自前の最前面・半透明・クリック素通しの窓に、専用プロファイルの Edge（アプリモード）をはめ込んで出し入れする。図のファイルが更新されていたら、次に出すときに読み直すので、Windows で pull したあとに作り直す必要はない。Ctrl+Alt+K はこの PC で別のものが使っていて登録できなかった。
+Windows には Hammerspoon がないので、`roba_win/keymap-overlay/overlay.ps1`（Windows 専用、リポジトリの隣。ビルドしたファームウェアは `roba_win/firmware/<run ID>`）が代わりをする。Ctrl+Alt+F13 で図を画面の上端に3枚重ね（`#overlay=top&mode=win`）、Ctrl+Alt+F14 で全レイヤーを画面いっぱいに出す（`#overlay&mode=win`）。同じキーでもう一度押すと消え、もう一方を押すと切り替わる。クリックは素通し。Edge の「同期しています」のお知らせが出ないよう `--disable-sync` で起動する。Edge は最前面の指定を自分で外すので、自前の最前面・半透明・クリック素通しの窓に、専用プロファイルの Edge（アプリモード）をはめ込んで出し入れする。図のファイルが更新されていたら、次に出すときに読み直すので、Windows で pull したあとに作り直す必要はない。Ctrl+Alt+K はこの PC で別のものが使っていて登録できなかった。
 
 ## キーの位置番号
 
@@ -83,6 +83,7 @@ Mac では Hammerspoon（Mac 専用、`~/Documents/roba/keymap-overlay/*.lua`）
 | キー | 動き | 置き場所 |
 |---|---|---|
 | 0〜6 | キーマップ図の表示を切り替え | `'` + `:` の同時押し |
+| D | 全レイヤーの詳しいキーマップ図を画面いっぱいに表示（0〜6 の図とは切り替えで、重ねない）。**Mac の Hammerspoon 側はまだ未対応**（2026-11-11 に Windows で追加） | `V` + `:` の同時押し |
 | N | 通知を消す | マウス `,` の位置 |
 | F | Finder を前に出す | マウス F の位置 |
 | Y | ¥（日本語入力中は「円」） | 数字 |
@@ -96,6 +97,7 @@ Mac では Hammerspoon（Mac 専用、`~/Documents/roba/keymap-overlay/*.lua`）
 - `/` + K で英数、`/` + T でかな（Windows では無変換 / 変換）
 - `-` + Tab で ⇧Tab
 - `'` + `:` でキーマップ図（Mac は ⌃⌥⇧⌘ + レイヤー番号。Windows モード（レイヤー7〜12）では Ctrl+Alt+F13 を送る。下の「Windows のキーマップ図」）
+- `V` + `:` で全レイヤーの詳しいキーマップ図（Mac は ⌃⌥⇧⌘D、Windows モードでは Ctrl+Alt+F14）
 - F キーへの切り替え後、1 + 2 で F12
 
 持ち主は同時押しを最小限にしたい方針。誤爆しそうな組み合わせ（ローマ字で続けて打つキー同士）は提案前に指摘する。

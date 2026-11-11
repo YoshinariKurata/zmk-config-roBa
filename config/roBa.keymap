@@ -111,6 +111,19 @@
             layers = <7 8 9 10 11 12>;
         };
 
+        // V + : で詳しいキーマップ図 (全レイヤーを画面いっぱいに)。Mac は Hammerspoon が ⌃⌥⇧⌘D を、Windows は overlay.ps1 が Ctrl+Alt+F14 を受け取る
+        keymap_full {
+            bindings = <&kp LC(LA(LS(LG(D))))>;
+            key-positions = <25 27>;
+            layers = <0 1 2 3 4 5 6>;
+        };
+
+        keymap_full_win {
+            bindings = <&kp LC(LA(F14))>;
+            key-positions = <25 27>;
+            layers = <7 8 9 10 11 12>;
+        };
+
         // F キーへの切り替え後: 1 + 2 で F12
         f12 {
             bindings = <&kp F12>;
