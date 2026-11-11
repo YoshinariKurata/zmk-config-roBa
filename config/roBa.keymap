@@ -143,17 +143,18 @@
         // 接続先の切り替えと同時に OS モードを切り替える (layer 7 = Windows/Android)
         // Mac (接続先1) と Windows (接続先2) は、切り替える前に今つながっている PC へモニターのホットキーを送り、
         // その PC の Screen InStyle がモニターの入力も切り替える (Ctrl+Shift+9 = USB-C・Mac、8 = DisplayPort・Windows)。
-        // キーを離した報告が届いてから接続先を変えるよう、少し待つ
+        // キーを離した報告が届いてから接続先を変えるよう、少し待つ。
+        // Mac の Screen InStyle は、マクロ既定の短いタップ (約30ms) だと「suppressed」として取り消したので、人が押すくらいの長さで押す
         bt_mac0: bt_mac0 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LC(LS(N9))>, <&macro_wait_time 300>, <&bt BT_SEL 0>, <&to 0>;
+            bindings = <&macro_tap_time 150>, <&kp LC(LS(N9))>, <&macro_wait_time 500>, <&bt BT_SEL 0>, <&to 0>;
         };
 
         bt_win1: bt_win1 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LC(LS(N8))>, <&macro_wait_time 300>, <&bt BT_SEL 1>, <&to 7>;
+            bindings = <&macro_tap_time 150>, <&kp LC(LS(N8))>, <&macro_wait_time 500>, <&bt BT_SEL 1>, <&to 7>;
         };
 
         bt_win2: bt_win2 {
