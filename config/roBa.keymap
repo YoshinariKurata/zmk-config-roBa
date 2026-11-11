@@ -307,13 +307,14 @@
             >;
         };
 
-        // 左親指・右のキーを押している間: Z の位置が Shift (置き場所が決まるまでの仮置き)
+        // 左親指・右のキーを押している間: Z の位置が Shift (置き場所が決まるまでの仮置き)、Enter が Shift+Enter
+        // Windows モードでも WIN_ARROW (9) と WIN (7) はこの位置が &trans なので、ここが効く
         ARROW {
             bindings = <
 &trans          &trans      &trans      &trans        &trans                      &trans  &trans  &trans  &trans  &trans
 &trans          &trans      &trans      &trans        &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
 &kp LEFT_SHIFT  &trans      &trans      &trans        &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans      &trans      &trans        &trans  &trans      &trans  &trans                          &trans
+&trans          &trans      &trans      &trans        &trans  &trans      &trans  &kp LS(ENTER)                   &trans
             >;
 
             sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;

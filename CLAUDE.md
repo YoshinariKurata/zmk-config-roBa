@@ -56,7 +56,7 @@ Windows には Hammerspoon がないので、`roba_win/keymap-overlay/overlay.ps
 | 0 | 基本 | |
 | 1 | SYMBOL 記号 | 37（左親指・左）を押している間 |
 | 2 | NUM 数字 | 39（左親指・右）を2回押し。1回押しでどのレイヤーからも基本へ戻る |
-| 3 | ARROW（今は Shift だけの仮置き） | 39 を長押し。Z の位置が唯一の Shift |
+| 3 | ARROW（今は Shift などの仮置き） | 39 を長押し。Z の位置が唯一の Shift、Enter（41）が Shift+Enter（Mac・Windows 共通） |
 | 4 | MOUSE | トラックボールを動かすと自動で入る（閾値 10、10分で解除）。空きキーは全部 `&none` |
 | 5 | SCROLL・F キー | マウスレイヤーの Y 長押しでスクロール。数字レイヤーの 1 の位置（`&sl 5`）で次の1キーが F キー |
 | 6 | 設定・BT | 4（`.`）を1秒長押し |
