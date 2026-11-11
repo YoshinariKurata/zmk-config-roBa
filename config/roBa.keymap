@@ -141,16 +141,19 @@
         };
 
         // 接続先の切り替えと同時に OS モードを切り替える (layer 7 = Windows/Android)
+        // Mac (接続先1) と Windows (接続先2) は、切り替える前に今つながっている PC へモニターのホットキーを送り、
+        // その PC の Screen InStyle がモニターの入力も切り替える (Ctrl+Shift+9 = USB-C・Mac、8 = DisplayPort・Windows)。
+        // キーを離した報告が届いてから接続先を変えるよう、少し待つ
         bt_mac0: bt_mac0 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&bt BT_SEL 0>, <&to 0>;
+            bindings = <&kp LC(LS(N9))>, <&macro_wait_time 300>, <&bt BT_SEL 0>, <&to 0>;
         };
 
         bt_win1: bt_win1 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&bt BT_SEL 1>, <&to 7>;
+            bindings = <&kp LC(LS(N8))>, <&macro_wait_time 300>, <&bt BT_SEL 1>, <&to 7>;
         };
 
         bt_win2: bt_win2 {
@@ -352,11 +355,11 @@
         };
 
         // 設定・BT。K の位置で、モニター (EIZO EV3450XC) の入力を HDMI 1 (Switch 2) に切り替える:
-        // 今つながっている PC の Screen InStyle が Ctrl+Shift+J を受け取る (J = HDMI 1・Switch 2、K = DisplayPort・Windows、L = USB-C・Mac)
+        // 今つながっている PC の Screen InStyle が Ctrl+Shift+7 を受け取る (7 = HDMI 1・Switch 2、8 = DisplayPort・Windows、9 = USB-C・Mac)
         layer_6 {
             bindings = <
 &trans  &trans        &trans        &trans        &trans                           &bt_mac0      &bt_win1      &bt_win2      &bt_win3      &bt BT_SEL 4
-&trans  &trans        &trans        &trans        &trans  &trans      &trans       &kp LC(LS(J)) &trans        &trans        &trans        &trans
+&trans  &trans        &trans        &trans        &trans  &trans      &trans       &kp LC(LS(N7)) &trans       &trans        &trans        &trans
 &trans  &trans        &trans        &trans        &trans  &trans      &trans       &trans        &trans        &trans        &trans        &bt BT_CLR
 &trans  &trans        &trans        &trans        &trans  &trans      &trans       &trans                                                  &bt BT_CLR_ALL
             >;
