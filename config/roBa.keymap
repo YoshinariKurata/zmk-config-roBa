@@ -104,6 +104,13 @@
             layers = <6>;
         };
 
+        // Windows/Android モードでは ⌃⌥⇧⌘ が Office を開くので、Ctrl+Alt+K を送る (Windows のデスクトップのショートカットが図を開く)
+        keymap_win {
+            bindings = <&kp LC(LA(K))>;
+            key-positions = <26 27>;
+            layers = <7 8 9 10 11 12>;
+        };
+
         // F キーへの切り替え後: 1 + 2 で F12
         f12 {
             bindings = <&kp F12>;

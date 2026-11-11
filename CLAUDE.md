@@ -91,7 +91,7 @@ Mac では Hammerspoon（Mac 専用、`~/Documents/roba/keymap-overlay/*.lua`）
 
 - `/` + K で英数、`/` + T でかな（Windows では無変換 / 変換）
 - `-` + Tab で ⇧Tab
-- `'` + `:` でキーマップ図（Mac）
+- `'` + `:` でキーマップ図（Mac は ⌃⌥⇧⌘ + レイヤー番号。Windows モード（レイヤー7〜12）では Ctrl+Alt+K を送り、Windows のデスクトップの「roBa キーマップ」ショートカット（ホットキー Ctrl+Alt+K、`~/Documents/roba-keymap/open.ps1` を実行）が図を Edge で開く）
 - F キーへの切り替え後、1 + 2 で F12
 
 持ち主は同時押しを最小限にしたい方針。誤爆しそうな組み合わせ（ローマ字で続けて打つキー同士）は提案前に指摘する。
