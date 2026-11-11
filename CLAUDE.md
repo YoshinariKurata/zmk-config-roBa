@@ -31,7 +31,7 @@ https://claude.ai/artifact/3K1rzHMtDKGa16DA9rCfje （同じアカウントの Cl
 
 ## Windows のキーマップ図
 
-Windows には Hammerspoon がないので、`roba_win/keymap-overlay/overlay.ps1`（Windows 専用、リポジトリの隣。ビルドしたファームウェアは `roba_win/firmware/<run ID>`）が代わりをする。Ctrl+Alt+F13 で図を画面の上端に重ね、もう一度押すと消す（`#overlay=top&mode=win`、クリックは素通し）。専用プロファイルの Edge（アプリモード）を枠なし・最前面・半透明にして出し入れする。図のファイルが更新されていたら、次に出すときに読み直すので、Windows で pull したあとに作り直す必要はない。Ctrl+Alt+K はこの PC で別のものが使っていて登録できなかった。
+Windows には Hammerspoon がないので、`roba_win/keymap-overlay/overlay.ps1`（Windows 専用、リポジトリの隣。ビルドしたファームウェアは `roba_win/firmware/<run ID>`）が代わりをする。Ctrl+Alt+F13 で図を画面の上端に重ね、もう一度押すと消す（`#overlay=top&mode=win`、クリックは素通し）。Edge は最前面の指定を自分で外すので、自前の最前面・半透明・クリック素通しの窓に、専用プロファイルの Edge（アプリモード）をはめ込んで出し入れする。図のファイルが更新されていたら、次に出すときに読み直すので、Windows で pull したあとに作り直す必要はない。Ctrl+Alt+K はこの PC で別のものが使っていて登録できなかった。
 
 ## キーの位置番号
 
