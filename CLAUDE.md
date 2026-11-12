@@ -37,7 +37,14 @@ https://claude.ai/artifact/3K1rzHMtDKGa16DA9rCfje （同じアカウントの Cl
 
 ## Windows のキーマップ図
 
-Windows には Hammerspoon がないので、`roba_win/keymap-overlay/overlay.ps1`（Windows 専用、リポジトリの隣。ビルドしたファームウェアは `roba_win/firmware/<run ID>`）が代わりをする。Ctrl+Alt+F13 で図を画面の上端に3枚重ね（`#overlay=top&mode=win`）、Ctrl+Alt+F14 で全レイヤーを画面いっぱいに出す（`#overlay&mode=win`）。同じキーでもう一度押すと消え、もう一方を押すと切り替わる。クリックは素通し。Edge の「同期しています」のお知らせが出ないよう `--disable-sync` で起動する。Edge は最前面の指定を自分で外すので、自前の最前面・半透明・クリック素通しの窓に、専用プロファイルの Edge（アプリモード）をはめ込んで出し入れする。図のファイルが更新されていたら、次に出すときに読み直すので、Windows で pull したあとに作り直す必要はない。Ctrl+Alt+K はこの PC で別のものが使っていて登録できなかった。
+Windows には Hammerspoon がないので、`roba_win/keymap-overlay/overlay.ps1`（Windows 専用、リポジトリの隣。スタートアップから起動。ビルドしたファームウェアは `roba_win/firmware/<run ID>`）が代わりをする。動きは Mac の `roba_keymap.lua` にそろえてある。
+
+- Ctrl+Alt+F13（`'` + `:`）: 記号・基本・数字の3枚（`#overlay=top&mode=win`）を、押すたびに画面の上（中央）→ 下（中央）→ 消す。
+- Ctrl+Alt+F14（`V` + `:`）: 全レイヤーの図（`#overlay=full&mode=win`、Mac と同じ見た目）を画面いっぱいに。もう一度押すと消す。2つは重ねない。クリックは素通し。
+- **自動で最新になる。** 2分ごとに `keymap-overlay/sync.ps1` を裏で動かし、追跡しているファイルに未コミットの変更がなければ `git pull --ff-only`（結果は `keymap-overlay/sync-log.txt` の1行）。3秒ごとに `diagram/roba-keymap.html` の更新日時を見て、変わっていたら隠れている図を裏で読み直す。なので Windows でも pull のあとに何かを実行する必要はない。
+- 2つの図は起動時に読み込んで隠しておき、キーでは見せる・隠すだけ（すぐ出る）。
+- しくみ: Edge は最前面の指定を自分で外すので、自前の最前面・半透明・クリック素通しの窓に、専用プロファイルの Edge（アプリモード、`--disable-sync` で「同期しています」のお知らせを出さない）をはめ込む。Edge は透明にできず、色キーも別プロセスの Edge の中身には効かなかったので、**窓をカードの形に切り抜いて**後ろを見せる。小さい図は3枚の位置、全画面の図は図の `fullLayout()` と CSS（`html.overlay.full`）と同じ計算（`Get-FullCards`）でカードと下の案内の位置を出している。**図の側で全画面のカードの大きさ・余白・見出しを変えたら、`overlay.ps1` の `Get-FullCards` も合わせる**（合わないとカードの端が欠けたり黒いふちが出る）。
+- Ctrl+Alt+K はこの PC では Kindle が使っている。
 
 ## キーの位置番号
 
