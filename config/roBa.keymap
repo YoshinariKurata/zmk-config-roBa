@@ -59,6 +59,7 @@
         shift_tab {
             bindings = <&kp LS(TAB)>;
             key-positions = <14 15>;
+            layers = <0 1 2 3 4 5 6 7 8 9 10 11 12 13 14>;
         };
 
         // ' + : でキーマップ図を表示 (Hammerspoon が ⌃⌥⇧⌘ + レイヤー番号を受け取る)
@@ -336,9 +337,10 @@
         };
 
         // トラックボールを動かすと自動で入る。左親指・右のキーを1回押すと抜ける
+        // . の位置を押している間は設定・BT レイヤー (基本と違って長押しを待たない)。そこから G でゲームレイヤーに入れる
         MOUSE {
             bindings = <
-&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &kp LC(UP)     &kp LC(LA(LS(LG(N))))  &none                  &kp LC(LA(LS(LG(F))))  &none          &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
+&hold_kp LA(LG(W)) LG(W)  &hold_kp LC(LG(F)) LG(M)  &kp LC(UP)     &kp LC(LA(LS(LG(N))))  &mo 6                  &kp LC(LA(LS(LG(F))))  &none          &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
 &kp LG(A)                 &kp LC(LEFT)              &kp LC(DOWN)   &kp LC(RIGHT)  &none          &kp LS(LG(N3))  &none   &none                  &none         &kp LC(LS(TAB))  &none  &kp LC(TAB)
 &none                     &kp LG(X)                 &kp LG(C)      &kp LG(V)      &none   &none          &none   &none   &none     &none            &none   &none
 &none                     &none                     &none          &none          &none   &trans         &none   &none                                      &none
@@ -355,13 +357,13 @@
             >;
         };
 
-        // 設定・BT。K の位置で、モニター (EIZO EV3450XC) の入力を HDMI 1 (Switch 2) に切り替える:
+        // 設定・BT。G の位置でゲームレイヤー (15) に入る。K の位置で、モニター (EIZO EV3450XC) の入力を HDMI 1 (Switch 2) に切り替える:
         // 今つながっている PC の Screen InStyle が Ctrl+Shift+7 を受け取る (7 = HDMI 1・Switch 2、8 = DisplayPort・Windows、9 = USB-C・Mac)
         layer_6 {
             bindings = <
 &trans  &trans        &trans        &trans        &trans                           &bt_mac0      &bt_win1      &bt_win2      &bt_win3      &bt BT_SEL 4
 &trans  &trans        &trans        &trans        &trans  &trans      &trans       &kp LC(LS(N7)) &trans       &trans        &trans        &trans
-&trans  &trans        &trans        &trans        &trans  &trans      &trans       &trans        &trans        &trans        &trans        &bt BT_CLR
+&trans  &trans        &trans        &trans        &trans  &trans      &trans       &tog 15       &trans        &trans        &trans        &bt BT_CLR
 &trans  &trans        &trans        &trans        &trans  &trans      &trans       &trans                                                  &bt BT_CLR_ALL
             >;
         };
@@ -443,6 +445,18 @@
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans        &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans        &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                &trans
+            >;
+        };
+
+        // ゲーム (LoL・TFT)。設定・BT レイヤーの G で入り、左親指・右のキー1回でいつもどおり基本へ戻る (39 は &trans のまま)。
+        // いまのモードの上に重ねる (&tog) ので Mac・Windows 共通。ゲームの既定のキーをそのまま送り、間にソフトを挟まない。
+        // 遅れを出さないため、このレイヤーでは長押し判定も同時押しも使わない (コンボは layers で 15 を外している)。1キー1操作
+        GAME {
+            bindings = <
+&kp N1   &kp N2  &kp N3     &kp N4     &kp N5                      &none      &none      &mkp MB1  &mkp MB3  &mkp MB2
+&kp TAB  &kp Q   &kp W      &kp E      &kp R      &kp N6      &none      &none      &none     &none     &none     &none
+&none    &kp D   &kp F      &kp B      &kp N7     &kp Y       &none      &none      &none     &none     &none     &none
+&kp ESC  &kp P   &kp LALT   &kp LCTRL  &kp SPACE  &trans      &kp BSPC   &kp ENTER                     &none
             >;
         };
     };
