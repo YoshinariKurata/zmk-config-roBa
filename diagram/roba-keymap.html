@@ -54,19 +54,14 @@ html.overlay .stack { display: flex; flex-direction: column; gap: 6px; }
 html.overlay.top .stack { flex-direction: row; }
 html.overlay.top .card { flex: 1 1 0; min-width: 0; }
 html.overlay.top .panel { right: auto; width: calc((100% - 12px) / 3); box-sizing: border-box; }
-/* #overlay=full: every layer, three columns filling the screen (Mac: Hammerspoon's ⌃⌥⇧⌘D) */
-html.overlay.full, html.overlay.full body { background: rgba(8, 9, 11, .92); }
-html.overlay.full .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 24px; box-sizing: border-box; min-height: 100vh; align-content: center; }
-html.overlay.full .card { background: #1b1e25; }
-html.overlay.full .panel { right: auto; width: calc((100% - 96px) / 3); box-sizing: border-box; }
-html.overlay.full .minilabel { font-size: 15px; top: 8px; }
+/* #overlay=full: every layer as floating glass cards over a dimmed screen (Mac: Hammerspoon's ⌃⌥⇧⌘D). Styled at the end of the overlay rules */
 .card {
   position: relative; padding: 6px; border-radius: 14px; pointer-events: none;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
 }
 /* How to get into the layer, in the empty column between the two hands. Only on the full overlay (#overlay); the top strip stays compact */
 .enter { display: none; }
-html.overlay:not(.top) .enter {
+html.overlay:not(.top):not(.full) .enter {
   display: block; position: absolute; left: 44.8%; width: 9.8%; top: 11%; margin: 0; text-align: center;
   font: 700 1.5cqw/1.35 var(--font-body); color: var(--accent); line-break: strict;
 }
@@ -89,6 +84,40 @@ html.overlay .ball { background: var(--blank); border: 0; font-size: 0; }
 /* Index-finger home keys (positions 13 = O and 18 = T), marked on every card like the bumps on a real keyboard. Keys are appended in position order, so nth-child is position + 1 */
 html.overlay .board > .key:nth-child(14) .cap, html.overlay .board > .key:nth-child(19) .cap { position: relative; box-shadow: inset 0 0 0 0.35cqw var(--accent); }
 html.overlay .board > .key:nth-child(14) .cap::after, html.overlay .board > .key:nth-child(19) .cap::after { content: ''; position: absolute; left: 32%; right: 32%; bottom: 10%; height: 0.6cqw; border-radius: 1cqw; background: var(--accent); }
+/* #overlay=full: the desktop stays visible, dimmed, and each layer floats as its own rounded card like a system window */
+.cardhead, .hint { display: none; }
+/* No dimming: Hammerspoon's window stops at the menu bar and the Dock, so a tint would end there. The cards stand on their own shadows.
+   fullLayout() picks the column count and sets --cw (card width) and --sw (row width) so every card fits on the screen */
+html.overlay.full { --gap: 22px; --cpad: 14px; --key: #4c5261; --blank: rgba(255, 255, 255, .055); }
+html.overlay.full, html.overlay.full body { background: transparent; }
+html.overlay.full .stack {
+  flex-direction: row; flex-wrap: wrap; justify-content: center; align-content: center;
+  gap: var(--gap); width: var(--sw); margin: 0 auto; box-sizing: border-box; min-height: 100vh; padding-bottom: 30px;
+}
+html.overlay.full .panel { right: auto; width: calc(var(--cw) - 2 * var(--cpad) + 12px); box-sizing: border-box; }
+html.overlay.full .card {
+  flex: 0 0 var(--cw); min-width: 0; box-sizing: border-box; padding: 10px var(--cpad) var(--cpad);
+  display: flex; flex-direction: column; gap: 8px; border-radius: 22px;
+  background: linear-gradient(180deg, rgba(44, 48, 58, .88), rgba(26, 29, 36, .9));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .09), inset 0 1px 0 rgba(255, 255, 255, .12), 0 24px 48px -16px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .35);
+}
+html.overlay.full .minilabel { display: none; }
+html.overlay.full .cardhead { display: flex; align-items: baseline; gap: 8px; padding: 2px 4px 0; white-space: nowrap; min-width: 0; }
+html.overlay.full .cardhead .ln { font: 700 11px/1 var(--font-key); color: var(--muted); letter-spacing: .04em; }
+html.overlay.full .cardhead .nm { font: 700 15px/1.2 var(--font-body); color: var(--ink); }
+html.overlay.full .cardhead .en { margin-left: auto; font: 500 11.5px/1.2 var(--font-body); color: var(--accent); overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+html.overlay.full .cap { background: linear-gradient(180deg, #575e6e, #474d5b); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1); }
+html.overlay.full .key.trans .cap, html.overlay.full .key.none .cap { background: var(--blank); box-shadow: none; }
+html.overlay.full .key.trigger .cap { background: linear-gradient(180deg, #ffb57d, #f28f4c); }
+html.overlay.full .hint {
+  display: block; position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); margin: 0;
+  padding: 6px 14px; border-radius: 999px; font: 500 12px/1.4 var(--font-body); color: rgba(255, 255, 255, .7);
+  background: rgba(30, 33, 41, .8); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.overlay.full .card { animation: rise .32s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 28ms); }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(10px) scale(.98); } }
 header h1 { font-size: 1.6rem; margin: 0; text-wrap: balance; }
 header p { margin: 4px 0 0; color: var(--muted); }
 
@@ -528,8 +557,28 @@ let start = 0;
 try { const s = parseInt(localStorage.getItem('roba-layer'), 10); if (s >= 0 && s < LAYERS.length) start = s; } catch (e) {}
 // #overlay — every layer as a card, used by the Hammerspoon overlay (and the Windows overlay with &mode=win). A layer with no keys of its own is left out.
 // #overlay=top — only 記号, 基本 and 数字, with 基本 in the middle (Hammerspoon puts this strip at the top or the bottom of the screen).
+// #overlay=full: choose the row count that gives the largest cards while all of them fit inside the window
+function fullLayout() {
+  const PAD = 32, GAP = 22, CPAD = 14, HEAD = 50, HINT = 30, RATIO = 5.05 / 13.6, MAX = 620;
+  const n = LAYERS.filter(L => !L.keys.every(key => key === _)).length;
+  const availW = innerWidth - PAD * 2, availH = innerHeight - PAD * 2 - HINT;
+  let best = { cw: 0, cols: 1 };
+  // Fewest rows first, so a tie (cards already at their largest) keeps the rows even, e.g. 4 + 4 on a wide monitor
+  for (let rows = 1; rows <= n; rows++) {
+    const cols = Math.ceil(n / rows);
+    const byW = (availW - GAP * (cols - 1)) / cols;
+    const byH = ((availH - GAP * (rows - 1)) / rows - HEAD) / RATIO + CPAD * 2;
+    const cw = Math.min(byW, byH, MAX);
+    if (cw > best.cw) best = { cw, cols };
+  }
+  const cw = Math.floor(best.cw);
+  const root = document.documentElement.style;
+  root.setProperty('--cw', cw + 'px');
+  root.setProperty('--sw', (cw * best.cols + GAP * (best.cols - 1)) + 'px');
+}
 function renderStack(top) {
   const stack = document.getElementById('stack');
+  if (document.documentElement.classList.contains('full')) fullLayout();
   stack.innerHTML = '';
   (top ? [1, 0, 2] : LAYERS.map((L, i) => L.n ?? i)).forEach(n => {
     const li = LAYERS.findIndex((L, i) => (L.n ?? i) === n);
@@ -549,9 +598,17 @@ function renderStack(top) {
       enter.textContent = L.enter;
       copy.appendChild(enter);
     }
-    card.append(label, copy);
+    const head = document.createElement('div');
+    head.className = 'cardhead';
+    head.innerHTML = `<span class="ln">L${n}</span><span class="nm">${esc(L.name)}</span><span class="en">${esc(L.enter || '')}</span>`;
+    card.style.setProperty('--i', stack.children.length);
+    card.append(head, label, copy);
     stack.appendChild(card);
   });
+  const hint = document.createElement('p');
+  hint.className = 'hint';
+  hint.textContent = mode === 'win' ? 'V + : で閉じる（Windows・Android モード）' : 'V + : で閉じる';
+  stack.appendChild(hint);
 }
 // #layer=<keymap layer number> — open the page on a layer
 function applyHash() {
@@ -575,5 +632,12 @@ function applyHash() {
   return true;
 }
 window.addEventListener('hashchange', applyHash);
+// Hammerspoon reuses one window and only moves it, so lay the cards out again when the screen size changes
+let resizeTimer;
+window.addEventListener('resize', () => {
+  if (!document.documentElement.classList.contains('overlay')) return;
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(applyHash, 150);
+});
 if (!applyHash()) render(start);
 </script>

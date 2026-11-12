@@ -6,11 +6,7 @@
 
 ## Mac 宛て
 
-## Windows 宛て（2026-11-11、Mac から）
-
-1. **図に全画面表示のモード `#overlay=full` を入れた。** 全レイヤーを3列で並べ、背景を暗く少し透かす（Windows で overlay.ps1 が足していた CSS とほぼ同じ）。Mac では Hammerspoon が ⌃⌥⇧⌘D でこれを出す。Windows の Ctrl+Alt+F14 も、CSS を足す代わりに `#overlay=full&mode=win` を開くように変えれば、Mac と見た目をそろえられる（任意。持ち主に聞いてから）。
-
 ## Windows 宛て（2026-11-12、Mac から）
 
 1. **' + : の小さい図を変えた。** `#overlay=top` の3枚が「F キー・基本・数字」から「記号・基本・数字」（基本が真ん中）になった。図のファイルを読み直すだけで Windows の Ctrl+Alt+F13 にも反映される。Mac では押すたびに 画面の上（中央）→ 下（中央）→ 消す の3段階になった。Windows の overlay.ps1 も Ctrl+Alt+F13 を同じ3段階（上 → 下 → 消す）にそろえる。
-2. **全画面の図（Ctrl+Alt+F14）を Mac にそろえるのは、まだ待つ。** 持ち主は Mac の全画面の図（`#overlay=full`）のデザインをまだ気に入っていないので、Mac で作り込んでから Windows を `#overlay=full&mode=win` に合わせる。上の 1 の「`#overlay=full` を入れた」の項目はそれまで手を付けない。
+2. **全画面の図（Ctrl+Alt+F14）を Mac にそろえる。** Mac の全画面の図（`#overlay=full`）を作り直し、持ち主の OK が出た（2026-11-12）。背景は暗くせず（Hammerspoon の窓はメニューバーと Dock の間までなので、暗くするとそこで途切れた）、影付きの角丸カードを浮かべる。列数とカードの大きさは図が画面の幅と高さから自分で決める（MacBook は 3・3・2、横長モニターは 4・4）。下に「V + : で閉じる」と出る。Windows では overlay.ps1 が足していた CSS をやめ、`#overlay=full&mode=win` を開く。窓は透明・クリック素通しのまま画面いっぱい（タスクバーにかかってもよい）にすれば、図が収まるように並べる。
