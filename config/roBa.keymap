@@ -10,7 +10,7 @@
 
 &trackball {
     automouse-layer = <4>;
-    scroll-layers = <5 11>;
+    scroll-layers = <5 11 18>;
 
     // arrows {
     //     layers = <3>;
@@ -116,13 +116,13 @@
         keymap_full {
             bindings = <&kp LC(LA(LS(LG(D))))>;
             key-positions = <25 27>;
-            layers = <0 1 2 3 4 5 6>;
+            layers = <0 1 2 3 4 5 6 16>;
         };
 
         keymap_full_win {
             bindings = <&kp LC(LA(F14))>;
             key-positions = <25 27>;
-            layers = <7 8 9 10 11 12>;
+            layers = <7 8 9 10 11 12 17>;
         };
 
         // F キーへの切り替え後: 1 + 2 で F12
@@ -206,6 +206,18 @@
         win_mouse_nav {
             if-layers = <7 3 4>;
             then-layer = <14>;
+        };
+
+        // Windows・Android モード中の Photoshop レイヤー (⌘ と Ctrl の位置を入れ替える)
+        win_photoshop {
+            if-layers = <7 16>;
+            then-layer = <17>;
+        };
+
+        // Photoshop レイヤー中のスクロール。トラックボールは一番上のレイヤーでスクロール判定するので、18 を一番上に置いて scroll-layers に入れる
+        photoshop_scroll {
+            if-layers = <16 5>;
+            then-layer = <18>;
         };
     };
 
@@ -354,12 +366,12 @@
             >;
         };
 
-        // 設定・BT。G の位置でゲームレイヤー (15) に入る。K の位置で、モニター (EIZO EV3450XC) の入力を HDMI 1 (Switch 2) に切り替える:
+        // 設定・BT。G の位置でゲームレイヤー (15)、S の位置で Photoshop レイヤー (16) に入る。K の位置で、モニター (EIZO EV3450XC) の入力を HDMI 1 (Switch 2) に切り替える:
         // 今つながっている PC の Screen InStyle が Ctrl+Shift+7 を受け取る (7 = HDMI 1・Switch 2、8 = DisplayPort・Windows、9 = USB-C・Mac)
         layer_6 {
             bindings = <
 &trans  &trans        &trans        &trans        &trans                           &bt_mac0      &bt_win1      &bt_win2      &bt_win3      &bt BT_SEL 4
-&trans  &trans        &trans        &trans        &trans  &trans      &trans       &kp LC(LS(N7)) &trans       &trans        &trans        &trans
+&trans  &trans        &trans        &trans        &trans  &trans      &trans       &kp LC(LS(N7)) &trans       &trans        &tog 16       &trans
 &trans  &trans        &trans        &trans        &trans  &trans      &trans       &tog 15       &trans        &trans        &trans        &bt BT_CLR
 &trans  &trans        &trans        &trans        &trans  &trans      &trans       &trans                                                  &bt BT_CLR_ALL
             >;
@@ -454,6 +466,41 @@
 &kp TAB  &kp Q   &kp W      &kp E      &kp R      &kp N6      &none      &none      &none     &none     &none     &none
 &none    &kp D   &kp F      &kp B      &kp N7     &kp Y       &none      &none      &none     &none     &none     &none
 &kp ESC  &kp P   &kp LALT   &kp LCTRL  &kp SPACE  &trans      &kp BSPC   &kp ENTER                     &none
+            >;
+        };
+
+        // Photoshop。設定・BT レイヤーの S で入り、左親指・右のキー1回で基本へ戻る (39 は &trans のまま)。
+        // 左手はどのソフトも使わないキー (F13、F16〜F20、テンキーの 0〜9) を送り、Mac の Hammerspoon (mac/hammerspoon/roba_photoshop.lua) が
+        // Photoshop が前面のときだけ Photoshop の操作に置き換える。押したままの修飾キーはそのまま足される。F14 / F15 は Mac で画面の明るさに使われることがあるので使わない。
+        // 一番下は本物の ⌃ ⌥ ⌘、親指は Shift と Space (手のひら)。右手はクリックとスクロール (Y 長押し)、⌫、Enter。エンコーダはブラシサイズ ([ / ])
+        PHOTOSHOP {
+            bindings = <
+&kp F13    &kp F16    &kp F17    &kp F18    &kp F19                         &none      &none      &mkp MB1  &lt_mkp 5 MB3  &mkp MB2
+&kp F20    &kp KP_N1  &kp KP_N2  &kp KP_N3  &kp KP_N4  &kp KP_N5      &none      &none      &none     &none          &none     &none
+&kp KP_N6  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_N0  &kp ESC        &none      &none      &none     &none          &none     &none
+&kp LCTRL  &kp LALT   &kp LGUI   &kp LSHIFT &kp SPACE  &trans         &kp BSPC   &kp ENTER                               &none
+            >;
+
+            sensor-bindings = <&inc_dec_kp RBKT LBKT>;
+        };
+
+        // Windows・Android モード中の Photoshop (7 と 16 の条件付き)。一番下を Win / Alt / Ctrl に。Windows 側の置き換えはまだない
+        WIN_PHOTOSHOP {
+            bindings = <
+&trans    &trans    &trans     &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans    &trans    &trans     &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans    &trans    &trans     &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&kp LGUI  &kp LALT  &kp LCTRL  &trans  &trans  &trans      &trans  &trans                          &trans
+            >;
+        };
+
+        // Photoshop レイヤー中に Y を押したまま (16 と 5 の条件付き)。中身はなく、スクロール判定のためだけにある
+        PHOTOSHOP_SCROLL {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
         };
     };

@@ -3,6 +3,6 @@
 
 local DIR = os.getenv("HOME") .. "/Documents/roba/zmk-config-roBa/mac/hammerspoon/"
 
-for _, name in ipairs({ "roba_keymap", "roba_notifications", "roba_yen", "roba_finder", "roba_brackets" }) do
+for _, name in ipairs({ "roba_keymap", "roba_notifications", "roba_yen", "roba_finder", "roba_brackets", "roba_photoshop" }) do
   dofile(DIR .. name .. ".lua")
 end
